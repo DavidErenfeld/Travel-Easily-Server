@@ -1,0 +1,28 @@
+###
+GET http://127.0.0.1:3000/
+
+###
+GET http://127.0.0.1:3000/315711334
+
+###
+POST http://127.0.0.1:3000/
+Content-Type: application/json
+
+{
+  "userName": "David",
+  "_id": "315711332"
+}
+
+
+
+###
+PUT   http://127.0.0.1:3000/31571141
+Content-Type: application/json
+
+{
+ "name": "mavid",
+  "_id": "31571141"
+}
+
+###
+DELETE http://127.0.0.1:3000/
