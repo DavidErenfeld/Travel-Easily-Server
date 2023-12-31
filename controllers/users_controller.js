@@ -4,7 +4,7 @@ const getAllUsers = async (req, res) => {
   console.log("get all users");
   const users = await Users.find();
   try {
-    res.send(users);
+    res.status(200).send(users);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err.message });
@@ -50,13 +50,25 @@ const putUserById = async (req, res) => {
   }
 };
 
-const deleteUser = (req, res) => {
-  res.send("delete user");
+const deleteUserById = async (req, res) => {
+  console.log("delete user");
+  try {
+    const deleteUser = await Users.findOneAndDelete({ _id: req.params.id });
+    if (!deleteUser) {
+      return res
+        .status(404)
+        .json({ message: `id: ${req.params.id} is not found` });
+    }
+    res.send(`User ${req.params.id} is deleted`);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
+
 module.exports = {
   getAllUsers,
   getUserById,
   postUser,
   putUserById,
-  deleteUser,
+  deleteUserById,
 };

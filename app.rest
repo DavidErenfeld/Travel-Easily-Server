@@ -9,20 +9,20 @@ POST http://127.0.0.1:3000/
 Content-Type: application/json
 
 {
-  "userName": "David",
-  "_id": "315711332"
+ "email": "Dfds",
+  "password": "315711332"
 }
 
 
 
 ###
-PUT   http://127.0.0.1:3000/31571141
+PUT   http://127.0.0.1:3000/65908f9d1ac13a259b7ad218
 Content-Type: application/json
 
 {
- "name": "mavid",
-  "_id": "31571141"
+ "email": "mavid",
+  "password": "65908f9d1ac13a259b7ad218"
 }
 
 ###
-DELETE http://127.0.0.1:3000/
+DELETE http://127.0.0.1:3000/65909065064f82501110fe06
