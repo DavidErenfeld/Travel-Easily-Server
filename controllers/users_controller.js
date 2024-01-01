@@ -35,7 +35,7 @@ const postUser = async (req, res) => {
 };
 
 const putUserById = async (req, res) => {
-  console.log("put user");
+  console.log("put userById");
   const userId = req.params.id;
   try {
     const updateUser = await Users.findByIdAndUpdate(userId, req.body, {
