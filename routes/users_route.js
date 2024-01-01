@@ -10,6 +10,6 @@ router.post("/", User.postUser);
 
 router.put("/:id", User.putUserById);
 
-router.delete("/", User.deleteUser);
+router.delete("/:id", User.deleteUserById);
 
 module.exports = router;

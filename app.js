@@ -16,8 +16,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", users_route);
 
-const port = process.env.PORT;
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+module.exports = app;
