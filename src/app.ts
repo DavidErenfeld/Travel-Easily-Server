@@ -1,9 +1,10 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const dotenv = require("dotenv").config();
-const mongoose = require("mongoose");
-const users_route = require("./routes/users_route");
-const bodyParser = require("body-parser");
+import dotenv from "dotenv";
+dotenv.config();
+import mongoose from "mongoose";
+import users_route from "./routes/users_route";
+import bodyParser from "body-parser";
 
 // Connect to the db
 mongoose.connect(process.env.DB_URL);
@@ -16,4 +17,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", users_route);
 
-module.exports = app;
+export default app;

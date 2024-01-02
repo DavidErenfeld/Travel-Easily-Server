@@ -1,8 +1,12 @@
-const request = require("supertest");
-const app = require("../app");
-const mongoose = require("mongoose");
-const UsersModel = require("../models/users_model");
+import request from "supertest";
+import app from "../app";
+import mongoose from "mongoose";
+import UsersModel from "../models/users_model";
 
+interface IUsers {
+  email: string;
+  password: string;
+}
 //Delete DB before test
 beforeAll(async () => {
   console.log("jest beforeAll");
@@ -43,15 +47,11 @@ describe("--Auth Tests--", () => {
   };
 
   //FUNCTION  Add a new student and send to the DB
-  const addNewUser = async (user) => {
+  const addNewUser = async (user: IUsers) => {
     const response = await request(app).post("/").send(user);
 
     expect(response.statusCode).toEqual(200);
     expect(response.text).toEqual("OK");
-  };
-
-  const updateUserById = async (_id) => {
-    const response = await request(app).findByIdAndUpdate(_id);
   };
 
   test("1 Test get all users - empty collection", async () => {
