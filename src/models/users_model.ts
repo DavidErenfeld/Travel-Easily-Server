@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
-interface IUsers {
+export interface IUsers {
+  _id?: string;
   email: string;
   password: string;
+  tokens?: string[];
 }
 
 const usersSchema = new mongoose.Schema<IUsers>({
@@ -13,6 +15,10 @@ const usersSchema = new mongoose.Schema<IUsers>({
   password: {
     type: String,
     required: true,
+  },
+  tokens: {
+    type: [String],
+    required: false,
   },
 });
 

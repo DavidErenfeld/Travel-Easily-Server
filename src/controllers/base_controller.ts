@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Model } from "mongoose";
 
-class BaseController<ObjectInterface> {
+export class BaseController<ObjectInterface> {
   model: Model<ObjectInterface>;
   constructor(model: Model<ObjectInterface>) {
     this.model = model;

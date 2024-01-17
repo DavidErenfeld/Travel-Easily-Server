@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BaseController = void 0;
 class BaseController {
     constructor(model) {
         this.model = model;
@@ -91,6 +92,7 @@ class BaseController {
         });
     }
 }
+exports.BaseController = BaseController;
 const createController = (model) => new BaseController(model);
 exports.default = createController;
 //# sourceMappingURL=base_controller.js.map
