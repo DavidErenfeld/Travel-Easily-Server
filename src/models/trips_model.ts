@@ -8,6 +8,18 @@ export interface ITrips {
   typeTrip: string;
   numOfDays: number;
   tripDescription: string[];
+  numOfComments: number;
+  numOfLikes: number;
+
+  comments?: Array<{
+    owner: string;
+    comment: string;
+    date: Date;
+  }>;
+
+  likes?: Array<{
+    owner: string;
+  }>;
 }
 
 const tripsSchema = new mongoose.Schema<ITrips>({
@@ -15,6 +27,7 @@ const tripsSchema = new mongoose.Schema<ITrips>({
     type: String,
     required: true,
   },
+
   typeTraveler: {
     type: String,
     required: true,
@@ -34,6 +47,28 @@ const tripsSchema = new mongoose.Schema<ITrips>({
   tripDescription: {
     type: [String],
     required: true,
+  },
+
+  comments: [
+    {
+      owner: String,
+      comment: String,
+      date: Date,
+    },
+  ],
+
+  numOfComments: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+
+  likes: [{ owner: String, date: Date }],
+
+  numOfLikes: {
+    type: Number,
+    required: true,
+    default: 0,
   },
 });
 

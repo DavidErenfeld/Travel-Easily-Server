@@ -1,5 +1,5 @@
 ###
-GET http://127.0.0.1:3000/
+GET http://127.0.0.1:3000/trips
 
 ###
 GET http://127.0.0.1:3000/315711334
@@ -13,7 +13,23 @@ Content-Type: application/json
   "password": "315711332"
 }
 
+###
+POST http://127.0.0.1:3000/trips
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWIwMTA2MjU5MGZhMTYwMWJkN2EyZWIiLCJpYXQiOjE3MDYwMzczNTIsImV4cCI6MTcwNjA0ODE1Mn0.klP13APohIIbuThiVFFX-JDrKWYzVw4Ci2qeTt0-kfk
 
+{
+ "userName": "Moshe Levin",
+  "owner": "Moshe",
+  "typeTraveler": "romantic couple",
+  "country": "Bulgaria",
+  "typeTrip": "romantic",
+  "numOfDays": 3,
+  "tripDescription": ["Morning: We arrived in Sofia, the capital of Bulgaria, early in the morning. The city greeted us with a refreshing breeze and charming streets. My partner surprised me with a lovely bouquet of local flowers - such a sweet start to our trip. Afternoon: We explored the heart of Sofia, visiting landmarks like Alexander Nevsky Cathedral and the bustling Vitosha Boulevard. Walking hand in hand, we admired the city's blend of history and modernity. Evening: Dinner was at a quaint restaurant in the city center. We had a table outside, under the stars, and indulged in delicious Bulgarian cuisine. The night ended with a romantic stroll through the city's beautifully lit parks.",
+   "Morning: We took a train to Plovdiv, known for its romantic Old Town. The cobbled streets and colorful houses made me feel like I was walking through a fairy tale. Afternoon: We visited the ancient Roman theater of Plovdiv, a testament to the city's rich history. Sitting in the theater, we imagined watching a play from centuries ago. Evening: We had dinner at a local winery on the outskirts of Plovdiv. Tasting Bulgarian wines and enjoying the serene vineyard was absolutely magical.",
+"Morning: Our last day started with a leisurely breakfast at our hotel, where we planned our next adventure together. Afternoon: Before heading back to Sofia for our flight, we relaxed at the Central Mineral Baths in Plovdiv, soaking in the warm, mineral-rich waters. Evening: As we boarded our flight back, we were already reminiscing about the beautiful moments we shared. Bulgaria, with its enchanting towns and warm hospitality, had given us a treasure trove of memories to cherish."]
+
+}
 
 ###
 PUT   http://127.0.0.1:3000/65908f9d1ac13a259b7ad218
@@ -36,8 +52,8 @@ POST http://127.0.0.1:3000/auth/login
 Content-Type: application/json
 
 {
- "email": "Dfds",
-  "password": "315711332"
+ "email": "yair323@gmail.com",
+  "password": "315711440"
 }
 
 ###
@@ -45,8 +61,8 @@ POST http://127.0.0.1:3000/auth/register
 Content-Type: application/json
 
 {
- "email": "Dfds",
-  "password": "315711332"
+ "email": "yair323@gmail.com",
+  "password": "315711440"
 }
 
 
@@ -60,3 +76,28 @@ Content-Type: application/json
 }
 
 
+///////////////////////////////////////////////
+###
+POST http://127.0.0.1:3000/trips/65a8607f6071a65e10f8e509/comments
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFkOTI5N2ViMWU3MjJlMGMzZmEyMTEiLCJpYXQiOjE3MDU4NzQyODIsImV4cCI6MTcwNTg4NTA4Mn0.06lsCucD4HUbptlL_E_ENYcyOx2FAl0En_oQG0EsS3s
+
+{
+  "comment": "niuegcuicsxa"
+}
+
+###
+POST http://127.0.0.1:3000/trips/65a8607f6071a65e10f8e509/likes
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFkOTg2NWMxMGJkMjA2YmEyOTllMTkiLCJpYXQiOjE3MDU4NzU1NTksImV4cCI6MTcwNTg4NjM1OX0.ewEMz_9o4T1drnBk3rVwvcl0u8L3jTh_B2wPMWxGM2Y
+
+
+###
+DELETE http://127.0.0.1:3000/trips/65a8607f6071a65e10f8e509/likes
+Content-Type: application/json
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFkOTg2NWMxMGJkMjA2YmEyOTllMTkiLCJpYXQiOjE3MDU4NzU1NTksImV4cCI6MTcwNTg4NjM1OX0.ewEMz_9o4T1drnBk3rVwvcl0u8L3jTh_B2wPMWxGM2Y
+
+# ###
+# DELETE http://127.0.0.1:3000/trips/65a8607f6071a65e10f8e509/comments
+# Content-Type: application/json
+# Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFkOTg2NWMxMGJkMjA2YmEyOTllMTkiLCJpYXQiOjE3MDU4NzU1NTksImV4cCI6MTcwNTg4NjM1OX0.ewEMz_9o4T1drnBk3rVwvcl0u8L3jTh_B2wPMWxGM2Y

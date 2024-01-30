@@ -8,7 +8,7 @@ export class BaseController<ObjectInterface> {
   }
 
   async get(req: Request, res: Response) {
-    console.log("get all users");
+    console.log("get all trips");
     const objects = await this.model.find();
     try {
       res.status(200).send(objects);

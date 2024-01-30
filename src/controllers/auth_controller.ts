@@ -8,9 +8,10 @@ const register = async (req: AuthRequest, res: Response) => {
   console.log("register");
   const email = req.body.email;
   const password = req.body.password;
+  const userName = req.body.userName;
 
-  if (email == null || password == null) {
-    return res.status(400).send("email or password is null");
+  if (email == null || password == null || userName == null) {
+    return res.status(400).send("email or password or userName is null");
   }
 
   try {
@@ -26,6 +27,7 @@ const register = async (req: AuthRequest, res: Response) => {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     const user = await UserModel.create({
+      userName: userName,
       email: email,
       password: hashedPassword,
     });

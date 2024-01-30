@@ -1,12 +1,13 @@
 import request from "supertest";
 import app from "../app";
-import mongoose from "mongoose";
+import mongoose, { now } from "mongoose";
 import TripsModel, { ITrips } from "../models/trips_model";
 import UsersModel, { IUsers } from "../models/users_model";
 
 const user: IUsers = {
   email: "test@trip.com",
   password: "12345667867",
+  userName: "yechiel",
 };
 
 let accessToken: string;
@@ -14,13 +15,12 @@ let accessToken: string;
 beforeAll(async () => {
   console.log("jest beforeAll");
   await TripsModel.deleteMany();
-  await UsersModel.deleteMany({ email: user.email });
+  await UsersModel.deleteMany();
   const responseRegister = await request(app).post("/auth/register").send(user);
   user._id = responseRegister.body._id;
   await request(app).post("/auth/register").send(user);
   const responseLogin = await request(app).post("/auth/login").send(user);
   accessToken = responseLogin.body.accessToken;
-  console.log(`=================${accessToken}==================`);
 });
 
 //Close DB after test
@@ -43,6 +43,8 @@ describe("--Trips Tests--", () => {
     typeTrip: "type Trip",
     numOfDays: 2,
     tripDescription: ["aa", "bb"],
+    numOfComments: 0,
+    numOfLikes: 0,
   };
 
   const trip2: ITrips = {
@@ -52,8 +54,10 @@ describe("--Trips Tests--", () => {
     typeTrip: "type Trip 2",
     numOfDays: 1,
     tripDescription: ["tripDescription 2"],
+    numOfComments: 0,
+    numOfLikes: 0,
   };
-
+  const nonExistingId = new mongoose.Types.ObjectId();
   //FUNCTION  Add a new trip and send to the DB
   const addNewTrip = async (trip: ITrips) => {
     const response = await request(app)
@@ -100,32 +104,39 @@ describe("--Trips Tests--", () => {
     expect(trip.tripDescription[1]).toBe(trip1.tripDescription[1]);
   });
 
-  test("Test 4 get by owner", async () => {
-    console.log("Test get all trips -- 1 trip");
-    //Test if status cod == 200
-    const response = await request(app)
-      .get("/trips/owner/user._id")
-      .set("Authorization", "JWT " + accessToken);
-    expect(response.statusCode).toEqual(200);
-  });
+  // test("Test 4 get by owner", async () => {
+  //   console.log("Test get all trips -- 1 trip");
+  //   //Test if status cod == 200
+  //   const response = await request(app)
+  //     .get("/trips/owner/user._id")
+  //     .set("Authorization", "JWT " + accessToken);
+  //   expect(response.statusCode).toEqual(200);
+  // });
+
+  // test("Test 4.1 get by owner --file", async () => {
+  //   console.log("Test get all trips -- 1 trip");
+  //   //Test if status cod == 200
+  //   const response = await request(app)
+  //     .get("/trips/owner/user._id1w")
+  //     .set("Authorization", "JWT " + accessToken);
+  //   expect(response.statusCode).toEqual(200);
+  // });
 
   test("Test 5 update trip by id", async () => {
-    console.log("update trip by id");
+    console.log("update trip by id - Starting test");
     const response = await request(app).get("/trips");
     const data = response.body;
     const updateTrip = data[0];
-    // console.log(`=====update========${updateTrip._id}=======update========`);
     const res = await request(app)
       .put(`/trips/${updateTrip._id}`)
       .set("Authorization", "JWT " + accessToken)
       .send({
         _id: updateTrip._id,
-        owner: "update owner",
-        country: "update contry",
+        country: "update country",
         numOfDays: 1,
         tripDescription: "update tripDescription",
       });
-    expect(res.status).toEqual(200);
+    expect(res.status).toBe(200);
   });
 
   test("Test 5.1 update trip by id-- fail", async () => {
@@ -133,7 +144,6 @@ describe("--Trips Tests--", () => {
     const response = await request(app).get("/trips");
     const data = response.body;
     const updateTrip = data[0];
-    // console.log(`=============${user._id}===============`);
     const res = await request(app)
       .put(`/trips/${updateTrip._id}2`)
       .set("Authorization", "JWT " + accessToken)
@@ -143,7 +153,24 @@ describe("--Trips Tests--", () => {
         numOfDays: 1,
         tripDescription: ",oimunytbr",
       });
+
     expect(res.statusCode).toBe(500);
+  });
+
+  test("Test 5.2 update trip by id-- fail--id is not found", async () => {
+    console.log("update user by id-- fail--id is not found");
+
+    const res = await request(app)
+      .put(`/trips/${nonExistingId}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "Davhntbgrvid",
+        country: "Countnhtbgrvry",
+        numOfDays: 1,
+        tripDescription: ",oimunytbr",
+      });
+
+    expect(res.statusCode).toBe(404);
   });
 
   test("Test 6 add new trip and get all trips - 2 trips", async () => {
@@ -161,7 +188,7 @@ describe("--Trips Tests--", () => {
     console.log("delete trip by id");
     const response = await request(app).get("/trips");
     const data = response.body;
-    const trip = data[0];
+    const trip = data[1];
     // console.log(`=============${user._id}===============`);
     const res = await request(app)
       .delete(`/trips/${trip._id}`)
@@ -169,6 +196,28 @@ describe("--Trips Tests--", () => {
       .send();
 
     expect(res.statusCode).toBe(200);
+  });
+
+  test("Test 7.1 delete trip by id -- file--id not found", async () => {
+    console.log("delete trip by id -- -- file--id not found");
+
+    const res = await request(app)
+      .delete(`/trips/${nonExistingId}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send();
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  test("Test 7.2 delete trip by id -- file-- server err", async () => {
+    console.log("delete trip by id -- -- file-- server err");
+
+    const res = await request(app)
+      .delete(`/trips/${nonExistingId}2`)
+      .set("Authorization", "JWT " + accessToken)
+      .send();
+
+    expect(res.statusCode).toBe(500);
   });
 
   test("Test 8 get all trips - 1 trip", async () => {
@@ -180,5 +229,157 @@ describe("--Trips Tests--", () => {
     //Test if the collection is empty
     const data = response.body;
     expect(data.length).toEqual(1);
+  });
+
+  test("Test 9 Add comment to a trip", async () => {
+    console.log("Add comment to a trip");
+    const response = await request(app).get("/trips");
+    const data = response.body;
+    const trip = data[0];
+    const res = await request(app)
+      .post(`/trips/comments/${trip._id}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+        comment: "This is a test comment",
+        date: new Date(),
+      });
+
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("Test 9.1 Add comment to a trip --file User not authenticated", async () => {
+    console.log("Add comment to a trip --file User not authenticated");
+    const response = await request(app).get("/trips");
+    const data = response.body;
+    const trip = data[0];
+    const res = await request(app)
+      .post(`/trips/comments/${trip._id}`)
+      .set("Authorization", "JWT " + accessToken + "w")
+      .send({
+        owner: "David",
+        comment: "This is a test comment",
+        date: new Date(),
+      });
+
+    expect(res.statusCode).toBe(401);
+  });
+
+  test("Test 9.1 Add comment to a trip --file Trip not found", async () => {
+    console.log("Add comment to a trip --file Trip not found");
+
+    const res = await request(app)
+      .post(`/trips/comments/${nonExistingId}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+        comment: "This is a test comment",
+        date: new Date(),
+      });
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  test("Test 9.1 Add comment to a trip --file Server err", async () => {
+    console.log("Add comment to a trip --file Server err");
+
+    const res = await request(app)
+      .post(`/trips/comments/${nonExistingId}12`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+        comment: "This is a test comment",
+        date: new Date(),
+      });
+
+    expect(res.statusCode).toBe(500);
+  });
+
+  test("Test 10 Add like to a trip", async () => {
+    console.log("Add like to a trip");
+    const response = await request(app).get("/trips");
+    const data = response.body;
+    const trip = data[0];
+    const res = await request(app)
+      .post(`/trips/likes/${trip._id}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+      });
+
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("Test 10.1 Add 2 likes to a trip", async () => {
+    console.log("Add 2 likes to a trip");
+    const response = await request(app).get("/trips");
+    const data = response.body;
+    const trip = data[0];
+    const res = await request(app)
+      .post(`/trips/likes/${trip._id}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+      });
+
+    expect(res.statusCode).toBe(201);
+  });
+
+  test("Test 10.2 Add like to a tripn --file Trip not found", async () => {
+    console.log("Add like to a trip --file Trip not found");
+
+    const res = await request(app)
+      .post(`/trips/likes/${nonExistingId}`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+      });
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  test("Test 10.3 Add like to a tripn --Server err", async () => {
+    console.log("Add like to a trip --Server err");
+
+    const res = await request(app)
+      .post(`/trips/likes/${nonExistingId}12`)
+      .set("Authorization", "JWT " + accessToken)
+      .send({
+        owner: "David",
+      });
+
+    expect(res.statusCode).toBe(500);
+  });
+
+  test("Test 11 Remove like from a trip", async () => {
+    console.log("Remove like from a trip");
+    const response = await request(app).get("/trips");
+    const data = response.body;
+    const trip = data[0];
+    const res = await request(app)
+      .delete(`/trips/likes/${trip._id}`)
+      .set("Authorization", "JWT " + accessToken);
+
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("Test 11.1 Remove like from a trip --file Trip not found", async () => {
+    console.log("Remove like from a trip --file Trip not found");
+
+    const res = await request(app)
+      .delete(`/trips/likes/${nonExistingId}`)
+      .set("Authorization", "JWT " + accessToken);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  test("Test 11.2 Remove like from a trip --file Trip not found", async () => {
+    console.log("Remove like from a trip --file Trip not found");
+
+    const res = await request(app)
+      .delete(`/trips/likes/${nonExistingId}12`)
+      .set("Authorization", "JWT " + accessToken);
+
+    expect(res.statusCode).toBe(500);
   });
 });

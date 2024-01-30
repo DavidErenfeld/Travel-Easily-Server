@@ -1,6 +1,6 @@
 import Trips, { ITrips } from "../models/trips_model";
-import { BaseController } from "../controllers/base_controller";
-import { Model } from "mongoose";
+
+import mongoose, { Model } from "mongoose";
 // import { AuthRequest } from "./base_controller";
 import { Request, Response } from "express";
 
@@ -8,80 +8,171 @@ export interface AuthRequest extends Request {
   user?: { _id: string };
 }
 
-class TripsController extends BaseController<ITrips> {
-  constructor(model: Model<ITrips>) {
-    super(model);
+const getAllTrips = async (req: Request, res: Response) => {
+  console.log("get all trips");
+  const objects = await Trips.find();
+  try {
+    res.status(200).send(objects);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
   }
+};
 
-  async getByOwner(req: AuthRequest, res: Response) {
-    console.log(`get by id: ${req.params.owner}`);
-    try {
-      const obj = await this.model.find({ owner: req.params.owner });
-      res.send(obj);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ message: err.message });
+const getById = async (req: Request, res: Response) => {
+  console.log(`get by id: ${req.params.id}`);
+  try {
+    const obj = await Trips.findById(req.params.id);
+    res.send(obj);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const post = async (req: AuthRequest, res: Response) => {
+  console.log(`post user ${req.body}`);
+  const userId = req.user._id;
+  const message = req.body.owner;
+  req.body.owner = userId;
+
+  const obj = new Trips(req.body);
+  try {
+    await obj.save();
+    res.status(200).send("OK");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const putById = async (req: AuthRequest, res: Response) => {
+  console.log("putById method called");
+  const userId = req.user._id;
+  const objId = req.params.id;
+
+  try {
+    const obj = await Trips.findOne({ _id: objId, owner: userId });
+    if (!obj) {
+      return res.status(404).json({
+        message: "Object not found or you do not have permission to update it.",
+      });
     }
+
+    const updateObj = await Trips.findByIdAndUpdate(objId, req.body, {
+      new: true,
+    });
+
+    res.send(updateObj);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
+};
 
-  /////////////////////?????????????????מה עוזר לי לשנות את ה message אם אני שולח את הbody?????????????/////////////////////////////
-  async post(req: AuthRequest, res: Response) {
-    const userId = req.user._id;
-    const message = req.body.owner;
-    req.body.owner = userId;
-
-    super.post(req, res);
-  }
-
-  async putById(req: AuthRequest, res: Response) {
-    console.log("putById");
+const deleteById = async (req: AuthRequest, res: Response) => {
+  try {
     const userId = req.user._id; // ID של המשתמש המחובר מהטוקן
     const objId = req.params.id; // ID של האובייקט למחיקה
 
-    const message = req.body;
-    req.body.owner = userId;
-    try {
-      // מחפש את האובייקט שמתאים ל-ID ובבעלות המשתמש הנוכחי
-      const obj = await this.model.findOne({ _id: objId, owner: userId });
+    // מחפש את האובייקט שמתאים ל-ID ובבעלות המשתמש הנוכחי
+    const obj = await Trips.findOne({ _id: objId, owner: userId });
 
-      if (!obj) {
-        return res.status(404).json({
-          message:
-            "Object not found or you do not have permission to update it.",
-        });
-      }
-
-      const updateObj = await this.model.findByIdAndUpdate(objId, req.body, {
-        new: true,
+    if (!obj) {
+      return res.status(404).json({
+        message: "Object not found or you do not have permission to delete it.",
       });
-
-      res.send(updateObj);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
     }
+
+    await Trips.deleteOne({ _id: objId });
+    res.send(`Object ${objId} is deleted`);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
+};
 
-  async deleteById(req: AuthRequest, res: Response) {
-    try {
-      const userId = req.user._id; // ID של המשתמש המחובר מהטוקן
-      const objId = req.params.id; // ID של האובייקט למחיקה
-
-      // מחפש את האובייקט שמתאים ל-ID ובבעלות המשתמש הנוכחי
-      const obj = await this.model.findOne({ _id: objId, owner: userId });
-
-      if (!obj) {
-        return res.status(404).json({
-          message:
-            "Object not found or you do not have permission to delete it.",
-        });
-      }
-
-      await this.model.deleteOne({ _id: objId });
-      res.send(`Object ${objId} is deleted`);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+const addComment = async (req: AuthRequest, res: Response) => {
+  try {
+    // קבלת מזהה הטיול מהנתיב
+    const tripId = req.params.tripId;
+    // בדיקה שהמשתמש מאומת דרך ה-middleware
+    if (!req.user) {
+      return res.status(401).send("User not authenticated");
     }
-  }
-}
+    const userId = req.user._id;
+    const { comment } = req.body;
 
-export default new TripsController(Trips);
+    // חיפוש הטיול במסד הנתונים
+    const trip = await Trips.findById(tripId);
+    if (!trip) {
+      return res.status(404).send("Trip not found");
+    }
+
+    // הוספת התגובה למערך התגובות של הטיול
+    trip.comments.push({ owner: userId, comment: comment, date: new Date() });
+    trip.numOfComments++;
+
+    // שמירת הטיול עם התגובה החדשה
+    await trip.save();
+
+    // שליחת המענה המעודכן
+    res.status(200).send(trip);
+  } catch (error) {
+    // טיפול בשגיאות
+    res.status(500).send(error.message);
+  }
+};
+
+const addLike = async (req: AuthRequest, res: Response) => {
+  try {
+    const tripId = req.params.tripId;
+    const userId = req.user._id; // שימוש במחרוזת כפי שהיא
+    req.body.owner = userId;
+
+    const trip = await Trips.findById(tripId);
+    if (!trip) {
+      return res.status(404).send("Trip not found");
+    }
+
+    if (!trip.likes.some((like) => like.owner === userId)) {
+      trip.likes.push({ owner: userId });
+      trip.numOfLikes++;
+      await trip.save();
+      return res.status(200).send(trip);
+    }
+    res.status(201).send("It is not possible to give 2 likes");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const removeLike = async (req: AuthRequest, res: Response) => {
+  try {
+    const tripId = req.params.tripId;
+    const userId = req.user._id; // מזהה המשתמש מהאימות
+    req.body.owner = userId;
+
+    const trip = await Trips.findById(tripId);
+    if (!trip) {
+      return res.status(404).send("Trip not found");
+    }
+
+    trip.likes = trip.likes.filter((user) => user.owner !== userId);
+    trip.numOfLikes--;
+    await trip.save();
+
+    res.status(200).send(trip);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+export default {
+  getAllTrips,
+  getById,
+  post,
+  putById,
+  deleteById,
+  addComment,
+  addLike,
+  removeLike,
+};

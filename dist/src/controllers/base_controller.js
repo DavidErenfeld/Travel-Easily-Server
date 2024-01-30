@@ -16,7 +16,7 @@ class BaseController {
     }
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("get all users");
+            console.log("get all trips");
             const objects = yield this.model.find();
             try {
                 res.status(200).send(objects);

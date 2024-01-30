@@ -6,11 +6,30 @@ import UserModel, { IUsers } from "../models/users_model";
 const user = {
   email: "test@auth.com",
   password: "1238765423",
+  userName: "yechiel",
 };
 
 const user1 = {
   email: "test1@auth.com",
   password: "1238765423",
+  userName: "David",
+};
+
+const user2 = {
+  password: "1238765423",
+  userName: "David",
+};
+
+const user3 = {
+  email: "test1@auth.com1111",
+  password: "1238765423",
+  userName: "David",
+};
+
+const user4 = {
+  email: "test@auth.com",
+  password: "12387654231111",
+  userName: "yechiel",
 };
 
 let accessToken: string;
@@ -57,6 +76,21 @@ describe("--Auth Tests--", () => {
     expect(accessToken).toBeDefined();
   });
 
+  test("Test Login --file email or password is null", async () => {
+    const response = await request(app).post("/auth/login").send(user2);
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Test Login --file bad email or password", async () => {
+    const response = await request(app).post("/auth/login").send(user3);
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Test Login --file password is not match", async () => {
+    const response = await request(app).post("/auth/login").send(user4);
+    expect(response.statusCode).toBe(400);
+  });
+
   test("Test forbidden access without token", async () => {
     const response = await request(app).post("/trips");
     expect(response.statusCode).toBe(401);
@@ -94,6 +128,14 @@ describe("--Auth Tests--", () => {
     expect(response2.statusCode).toBe(200);
   });
 
+  test("Test refresh token --file", async () => {
+    const response = await request(app)
+      .get("/auth/refresh")
+      .set("Authorization", "JWT ")
+      .send();
+    expect(response.statusCode).toBe(401);
+  });
+
   test("logeout test", async () => {
     const response1 = await request(app)
       .post("/auth/logout")
@@ -106,7 +148,25 @@ describe("--Auth Tests--", () => {
       .get("/auth/refresh")
       .set("Authorization", "JWT " + refreshToken)
       .send();
-    expect(response2.status).not.toEqual(200);
+    expect(response2.status).toEqual(401);
+  });
+
+  test("logeout test", async () => {
+    const response1 = await request(app)
+      .post("/auth/logout")
+      .set("Authorization", "JWT " + refreshToken)
+      .send();
+
+    expect(response1.status).toEqual(401);
+  });
+
+  test("logeout test --file token is null", async () => {
+    const response1 = await request(app)
+      .post("/auth/logout")
+      .set("Authorization", "JWT ")
+      .send();
+
+    expect(response1.status).toEqual(401);
   });
 
   test("Test Register 2", async () => {
