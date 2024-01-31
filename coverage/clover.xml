@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706574987117" clover="3.2.0">
-  <project timestamp="1706574987117" name="All files">
-    <metrics statements="232" coveredstatements="213" conditionals="41" coveredconditionals="35" methods="35" coveredmethods="32" elements="308" coveredelements="280" complexity="0" loc="232" ncloc="232" packages="5" files="8" classes="8"/>
+<coverage generated="1706646509069" clover="3.2.0">
+  <project timestamp="1706646509069" name="All files">
+    <metrics statements="249" coveredstatements="230" conditionals="41" coveredconditionals="35" methods="38" coveredmethods="35" elements="328" coveredelements="300" complexity="0" loc="249" ncloc="249" packages="5" files="9" classes="9"/>
     <package name="src">
-      <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="1"/>
+      <metrics statements="24" coveredstatements="24" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="1"/>
       <file name="app.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\app.ts">
-        <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="1"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="13" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
+        <metrics statements="24" coveredstatements="24" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.common">
       <metrics statements="12" coveredstatements="12" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
       <file name="auth_middleware.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\common\auth_middleware.ts">
         <metrics statements="12" coveredstatements="12" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
         <line num="13" count="22" type="stmt"/>
         <line num="14" count="22" type="cond" truecount="2" falsecount="0"/>
         <line num="16" count="22" type="cond" truecount="1" falsecount="0"/>
@@ -44,16 +47,16 @@
         <line num="22" count="18" type="stmt"/>
         <line num="23" count="18" type="stmt"/>
         <line num="25" count="3" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.controllers">
       <metrics statements="173" coveredstatements="154" conditionals="34" coveredconditionals="30" methods="32" coveredmethods="30"/>
       <file name="auth_controller.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\controllers\auth_controller.ts">
         <metrics statements="82" coveredstatements="74" conditionals="27" coveredconditionals="24" methods="14" coveredmethods="14"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
         <line num="7" count="6" type="stmt"/>
         <line num="8" count="6" type="stmt"/>
         <line num="9" count="6" type="stmt"/>
@@ -132,11 +135,11 @@
         <line num="150" count="1" type="stmt"/>
         <line num="151" count="1" type="stmt"/>
         <line num="154" count="0" type="stmt"/>
-        <line num="159" count="2" type="stmt"/>
+        <line num="159" count="3" type="stmt"/>
       </file>
       <file name="trips_controller.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\controllers\trips_controller.ts">
         <metrics statements="91" coveredstatements="80" conditionals="7" coveredconditionals="6" methods="18" coveredmethods="16"/>
-        <line num="1" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
         <line num="11" count="14" type="stmt"/>
         <line num="12" count="14" type="stmt"/>
         <line num="13" count="14" type="stmt"/>
@@ -144,14 +147,14 @@
         <line num="15" count="14" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="33" count="2" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
         <line num="34" count="2" type="stmt"/>
         <line num="35" count="2" type="stmt"/>
         <line num="36" count="2" type="stmt"/>
@@ -226,51 +229,68 @@
         <line num="161" count="1" type="stmt"/>
         <line num="163" count="1" type="stmt"/>
         <line num="165" count="1" type="stmt"/>
-        <line num="169" count="2" type="stmt"/>
+        <line num="169" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.models">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="trips_model.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\models\trips_model.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="75" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
       </file>
       <file name="users_model.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\models\users_model.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.routes">
-      <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="34" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="auth_route.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\auth_route.ts">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+      </file>
+      <file name="file_routes.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\file_routes.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
       </file>
       <file name="trips_route.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\trips_route.ts">
         <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="41" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
       </file>
     </package>
   </project>

@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import tripsRoute from "./routes/trips_route";
 import AuthRoute from "./routes/auth_route";
 import cors from "cors";
+import fileRoute from "./routes/file_routes";
 app.use(cors());
 // בחירת בסיס הנתונים בהתאם לסביבת הריצה
 const dbUri =
@@ -28,4 +29,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/trips", tripsRoute);
 app.use("/auth", AuthRoute);
+app.use("/file", fileRoute);
+app.use("/public", express.static("public"));
 export default app;
