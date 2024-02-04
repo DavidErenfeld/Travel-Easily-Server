@@ -2,7 +2,9 @@ import mongoose from "mongoose";
 
 export interface ITrips {
   _id?: string;
-  owner: string;
+  owner?: string;
+  userName?: string;
+  imgUrl?: string;
   typeTraveler: string;
   country: string;
   typeTrip: string;
@@ -12,6 +14,7 @@ export interface ITrips {
   numOfLikes: number;
 
   comments?: Array<{
+    ownerId: string;
     owner: string;
     comment: string;
     date: Date;
@@ -26,6 +29,14 @@ const tripsSchema = new mongoose.Schema<ITrips>({
   owner: {
     type: String,
     required: true,
+  },
+
+  userName: {
+    type: String,
+  },
+
+  imgUrl: {
+    type: String,
   },
 
   typeTraveler: {
@@ -51,6 +62,7 @@ const tripsSchema = new mongoose.Schema<ITrips>({
 
   comments: [
     {
+      ownerId: String,
       owner: String,
       comment: String,
       date: Date,

@@ -16,7 +16,7 @@ Content-Type: application/json
 ###
 POST http://127.0.0.1:3000/trips
 Content-Type: application/json
-Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWIwMTA2MjU5MGZhMTYwMWJkN2EyZWIiLCJpYXQiOjE3MDYwMzczNTIsImV4cCI6MTcwNjA0ODE1Mn0.klP13APohIIbuThiVFFX-JDrKWYzVw4Ci2qeTt0-kfk
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWI2ZDVmZTUzODUyMTdhNTBmZTVmNzciLCJpYXQiOjE3MDcwMDY4NzgsImV4cCI6MTcwNzAxMDQ3OH0.l18yaqfy1XiwJ-OYzyveuCEtpbGVjj60aS2ACA5rux0
 
 {
  "userName": "Moshe Levin",
@@ -52,8 +52,9 @@ POST http://127.0.0.1:3000/auth/login
 Content-Type: application/json
 
 {
- "email": "yair323@gmail.com",
+ "email": "yair323aaaaaaaaaaa@gmail.com",
   "password": "315711440"
+  
 }
 
 ###
@@ -61,8 +62,9 @@ POST http://127.0.0.1:3000/auth/register
 Content-Type: application/json
 
 {
- "email": "yair323@gmail.com",
-  "password": "315711440"
+ "email": "yair323aaaaaaaaaaa@gmail.com",
+  "password": "315711440",
+  "userName": "david"
 }
 
 

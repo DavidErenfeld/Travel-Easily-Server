@@ -5,7 +5,11 @@ import mongoose, { Model } from "mongoose";
 import { Request, Response } from "express";
 
 export interface AuthRequest extends Request {
-  user?: { _id: string };
+  user?: {
+    _id: string;
+    userName: string;
+    imgUrl: string;
+  };
 }
 
 const getAllTrips = async (req: Request, res: Response) => {
@@ -33,8 +37,11 @@ const getById = async (req: Request, res: Response) => {
 const post = async (req: AuthRequest, res: Response) => {
   console.log(`post user ${req.body}`);
   const userId = req.user._id;
-  const message = req.body.owner;
+  const userName = req.user.userName;
+  const imgUrl = req.user.imgUrl;
   req.body.owner = userId;
+  req.body.userName = userName;
+  req.body.imgUrl = imgUrl;
 
   const obj = new Trips(req.body);
   try {
@@ -98,7 +105,8 @@ const addComment = async (req: AuthRequest, res: Response) => {
     if (!req.user) {
       return res.status(401).send("User not authenticated");
     }
-    const userId = req.user._id;
+    const userName = req.user.userName;
+    const owner_id = req.user._id;
     const { comment } = req.body;
 
     // חיפוש הטיול במסד הנתונים
@@ -108,7 +116,12 @@ const addComment = async (req: AuthRequest, res: Response) => {
     }
 
     // הוספת התגובה למערך התגובות של הטיול
-    trip.comments.push({ owner: userId, comment: comment, date: new Date() });
+    trip.comments.push({
+      ownerId: owner_id,
+      owner: userName,
+      comment: comment,
+      date: new Date(),
+    });
     trip.numOfComments++;
 
     // שמירת הטיול עם התגובה החדשה
@@ -139,7 +152,11 @@ const addLike = async (req: AuthRequest, res: Response) => {
       await trip.save();
       return res.status(200).send(trip);
     }
-    res.status(201).send("It is not possible to give 2 likes");
+    trip.likes = trip.likes.filter((user) => user.owner !== userId);
+    trip.numOfLikes--;
+    await trip.save();
+    return res.status(200).send(trip);
+    // res.status(201).send("It is not possible to give 2 likes");
   } catch (error) {
     res.status(500).send(error.message);
   }

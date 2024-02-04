@@ -3,11 +3,17 @@ import app from "../app";
 import mongoose, { now } from "mongoose";
 import TripsModel, { ITrips } from "../models/trips_model";
 import UsersModel, { IUsers } from "../models/users_model";
+import { AuthRequest } from "../controllers/trips_controller";
 
 const user: IUsers = {
   email: "test@trip.com",
   password: "12345667867",
   userName: "yechiel",
+};
+
+const userLogin = {
+  email: "test@trip.com",
+  password: "12345667867",
 };
 
 let accessToken: string;
@@ -38,6 +44,8 @@ afterAll((done) => {
 describe("--Trips Tests--", () => {
   const trip1: ITrips = {
     owner: "David",
+    userName: "aa",
+
     typeTraveler: "type Traveler",
     country: "Country",
     typeTrip: "type Trip",
@@ -49,6 +57,7 @@ describe("--Trips Tests--", () => {
 
   const trip2: ITrips = {
     owner: "moshe",
+    userName: "aa",
     typeTraveler: "type Traveler 2",
     country: "Country 2",
     typeTrip: "type Trip 2",
@@ -81,7 +90,17 @@ describe("--Trips Tests--", () => {
 
   test("Test 2 add new trip", async () => {
     console.log("Test add new trip");
-    await addNewTrip(trip1);
+    await addNewTrip({
+      owner: "David",
+      userName: "aa",
+      typeTraveler: "type Traveler",
+      country: "Country",
+      typeTrip: "type Trip",
+      numOfDays: 2,
+      tripDescription: ["aa", "bb"],
+      numOfComments: 0,
+      numOfLikes: 0,
+    });
   });
 
   test("3 Test get all trips - 1 trip", async () => {
@@ -96,6 +115,7 @@ describe("--Trips Tests--", () => {
     expect(data.length).toEqual(1);
     const trip = data[0];
     expect(trip.owner).toBe(user._id);
+    expect(trip.userName).toBe(user.userName);
     expect(trip.typeTraveler).toBe(trip1.typeTraveler);
     expect(trip.country).toBe(trip1.country);
     expect(trip.typeTrip).toBe(trip1.typeTrip);

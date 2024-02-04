@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 import tripsRoute from "./routes/trips_route";
 import AuthRoute from "./routes/auth_route";
 import cors from "cors";
-import fileRoute from "./routes/file_routes";
+import fileRoute from "./routes/file_route";
 app.use(cors());
 // בחירת בסיס הנתונים בהתאם לסביבת הריצה
 const dbUri =

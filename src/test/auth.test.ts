@@ -112,7 +112,7 @@ describe("--Auth Tests--", () => {
 
   test("Test refresh token", async () => {
     const response = await request(app)
-      .get("/auth/refresh")
+      .post("/auth/refresh")
       .set("Authorization", "JWT " + refreshToken)
       .send();
     expect(response.statusCode).toBe(200);
@@ -123,7 +123,7 @@ describe("--Auth Tests--", () => {
     newRefreshToken = response.body.refreshToken;
 
     const response2 = await request(app)
-      .get("/trips")
+      .post("/trips")
       .set("Authorization", "JWT " + newAccessToken);
     expect(response2.statusCode).toBe(200);
   });

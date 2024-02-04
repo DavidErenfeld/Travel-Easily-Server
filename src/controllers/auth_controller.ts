@@ -9,6 +9,7 @@ const register = async (req: AuthRequest, res: Response) => {
   const email = req.body.email;
   const password = req.body.password;
   const userName = req.body.userName;
+  const imgUrl = req.body.imgUrl;
 
   if (email == null || password == null || userName == null) {
     return res.status(400).send("email or password or userName is null");
@@ -30,6 +31,7 @@ const register = async (req: AuthRequest, res: Response) => {
       userName: userName,
       email: email,
       password: hashedPassword,
+      imgUrl: imgUrl,
     });
     res.status(200).send(user);
   } catch (err) {
@@ -58,8 +60,9 @@ const login = async (req: AuthRequest, res: Response) => {
     }
 
     // Create accessToken
-    const accessToken = await jwt.sign(
-      { _id: user._id },
+    // Create accessToken with userName
+    const accessToken = jwt.sign(
+      { _id: user._id, userName: user.userName, imgUrl: user.imgUrl }, // Add userName here
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRATION }
     );
@@ -70,6 +73,9 @@ const login = async (req: AuthRequest, res: Response) => {
       process.env.JWT_REFRESH_SECRET
     );
 
+    const userName = user.userName;
+    const imgUrl = user.imgUrl;
+
     // Put refreshToken in the DB
     if (user.tokens == null) {
       user.tokens = [refreshToken];
@@ -78,6 +84,8 @@ const login = async (req: AuthRequest, res: Response) => {
     }
     await user.save();
     res.status(200).send({
+      imgUrl: imgUrl,
+      userName: userName,
       accessToken: accessToken,
       refreshToken: refreshToken,
     });

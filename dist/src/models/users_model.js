@@ -17,6 +17,9 @@ const usersSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    imgUrl: {
+        type: String,
+    },
     tokens: {
         type: [String],
         required: false,

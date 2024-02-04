@@ -5,6 +5,7 @@ export interface IUsers {
   email: string;
   password: string;
   userName: string;
+  imgUrl?: string;
   tokens?: string[];
 }
 
@@ -20,6 +21,9 @@ const usersSchema = new mongoose.Schema<IUsers>({
   password: {
     type: String,
     required: true,
+  },
+  imgUrl: {
+    type: String,
   },
   tokens: {
     type: [String],
