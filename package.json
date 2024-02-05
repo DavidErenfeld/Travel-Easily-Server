@@ -8,6 +8,7 @@
     "testAuth": "cross-env NODE_ENV=test tsc && jest --detectOpenHandles  --coverage  --runInBand  ./src/test/auth.test.ts",
     "testTrip": "cross-env NODE_ENV=test tsc && jest --detectOpenHandles --coverage  --runInBand  ./src/test/trips.test.ts",
     "testFile": "cross-env NODE_ENV=test tsc && jest --detectOpenHandles --coverage --runInBand  ./src/test/file.test.ts",
+    "testUser": "cross-env NODE_ENV=test tsc && jest --detectOpenHandles --coverage --runInBand  ./src/test/user.test.ts",
     "start": "node ./dist/src/server.js",
     "dev": "nodemon ./src/server.ts"
   },

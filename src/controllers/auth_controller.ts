@@ -75,6 +75,7 @@ const login = async (req: AuthRequest, res: Response) => {
 
     const userName = user.userName;
     const imgUrl = user.imgUrl;
+    const userId = user._id;
 
     // Put refreshToken in the DB
     if (user.tokens == null) {
@@ -88,6 +89,7 @@ const login = async (req: AuthRequest, res: Response) => {
       userName: userName,
       accessToken: accessToken,
       refreshToken: refreshToken,
+      user_Id: userId,
     });
   } catch (err) {
     return res.status(500).send("server error");

@@ -4,11 +4,7 @@ import tripsController from "../controllers/trips_controller";
 import authMiddleWare from "../common/auth_middleware";
 
 router.get("/", tripsController.getAllTrips);
-// router.get(
-//   "/owner/:owner",
-//   authMiddleWare,
-//   tripsController.getByOwner.bind(tripsController)
-// );
+router.get("/:id", authMiddleWare, tripsController.getById);
 router.post("/", authMiddleWare, tripsController.post);
 router.put("/:id", authMiddleWare, tripsController.putById);
 router.delete(
@@ -24,6 +20,12 @@ router.post(
   tripsController.addComment.bind(tripsController)
 );
 
+router.delete(
+  "/comments/:tripId/:commentId",
+  authMiddleWare,
+  tripsController.deleteComment.bind(tripsController)
+);
+
 // Add like
 router.post(
   "/likes/:tripId",
@@ -32,10 +34,10 @@ router.post(
 );
 
 // Remove like
-router.delete(
-  "/likes/:tripId",
-  authMiddleWare,
-  tripsController.removeLike.bind(tripsController)
-);
+// router.delete(
+//   "/likes/:tripId",
+//   authMiddleWare,
+//   tripsController.removeLike.bind(tripsController)
+// );
 
 export default router;

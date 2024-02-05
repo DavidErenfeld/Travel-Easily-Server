@@ -26,10 +26,11 @@ const getAllTrips = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
   console.log(`get by id: ${req.params.id}`);
   try {
-    const obj = await Trips.findById(req.params.id);
-    res.send(obj);
+    // הנחתי שהמזהה של המשתמש מועבר כreq.params.id ולא כreq.params._id
+    const trips = await Trips.find({ owner: req.params.id }); // שימוש בfind במקום findById ותיקון הפרמטר לowner
+    res.send(trips);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -135,6 +136,28 @@ const addComment = async (req: AuthRequest, res: Response) => {
   }
 };
 
+const deleteComment = async (req: AuthRequest, res: Response) => {
+  try {
+    const tripId = req.params.tripId;
+    const commentId = req.params.commentId; // מזהה המשתמש מהאימות
+
+    const trip = await Trips.findById(tripId);
+    if (!trip) {
+      return res.status(404).send("Trip not found");
+    }
+
+    trip.comments = trip.comments.filter(
+      (comment) => comment._id === commentId
+    );
+    trip.numOfComments > 0 ? trip.numOfComments-- : (trip.numOfComments = 0);
+    await trip.save();
+
+    res.status(200).send(trip);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 const addLike = async (req: AuthRequest, res: Response) => {
   try {
     const tripId = req.params.tripId;
@@ -162,26 +185,26 @@ const addLike = async (req: AuthRequest, res: Response) => {
   }
 };
 
-const removeLike = async (req: AuthRequest, res: Response) => {
-  try {
-    const tripId = req.params.tripId;
-    const userId = req.user._id; // מזהה המשתמש מהאימות
-    req.body.owner = userId;
+// const removeLike = async (req: AuthRequest, res: Response) => {
+//   try {
+//     const tripId = req.params.tripId;
+//     const userId = req.user._id; // מזהה המשתמש מהאימות
+//     req.body.owner = userId;
 
-    const trip = await Trips.findById(tripId);
-    if (!trip) {
-      return res.status(404).send("Trip not found");
-    }
+//     const trip = await Trips.findById(tripId);
+//     if (!trip) {
+//       return res.status(404).send("Trip not found");
+//     }
 
-    trip.likes = trip.likes.filter((user) => user.owner !== userId);
-    trip.numOfLikes--;
-    await trip.save();
+//     trip.likes = trip.likes.filter((user) => user.owner !== userId);
+//     trip.numOfLikes--;
+//     await trip.save();
 
-    res.status(200).send(trip);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
+//     res.status(200).send(trip);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// };
 
 export default {
   getAllTrips,
@@ -190,6 +213,6 @@ export default {
   putById,
   deleteById,
   addComment,
+  deleteComment,
   addLike,
-  removeLike,
 };

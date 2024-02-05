@@ -14,6 +14,7 @@ export interface ITrips {
   numOfLikes: number;
 
   comments?: Array<{
+    _id?: string;
     ownerId: string;
     owner: string;
     comment: string;

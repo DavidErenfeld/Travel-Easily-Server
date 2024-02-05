@@ -5,9 +5,10 @@ dotenv.config();
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import tripsRoute from "./routes/trips_route";
-import AuthRoute from "./routes/auth_route";
+import authRoute from "./routes/auth_route";
 import cors from "cors";
 import fileRoute from "./routes/file_route";
+import userRoute from "./routes/user_route";
 app.use(cors());
 // בחירת בסיס הנתונים בהתאם לסביבת הריצה
 const dbUri =
@@ -28,7 +29,8 @@ db.once("open", () =>
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/trips", tripsRoute);
-app.use("/auth", AuthRoute);
+app.use("/auth", authRoute);
 app.use("/file", fileRoute);
+app.use("/users", userRoute);
 app.use("/public", express.static("public"));
 export default app;

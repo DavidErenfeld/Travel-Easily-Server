@@ -13,6 +13,7 @@ const trips_route_1 = __importDefault(require("./routes/trips_route"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
 const cors_1 = __importDefault(require("cors"));
 const file_route_1 = __importDefault(require("./routes/file_route"));
+const user_route_1 = __importDefault(require("./routes/user_route"));
 app.use((0, cors_1.default)());
 // בחירת בסיס הנתונים בהתאם לסביבת הריצה
 const dbUri = process.env.NODE_ENV === "test"
@@ -28,6 +29,7 @@ app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use("/trips", trips_route_1.default);
 app.use("/auth", auth_route_1.default);
 app.use("/file", file_route_1.default);
+app.use("/users", user_route_1.default);
 app.use("/public", express_1.default.static("public"));
 exports.default = app;
 //# sourceMappingURL=app.js.map
