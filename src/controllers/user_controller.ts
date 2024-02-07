@@ -1,5 +1,5 @@
-import Users, { IUsers } from "../models/users_model";
-import mongoose, { Model } from "mongoose";
+import Users from "../models/users_model";
+import Trips from "../models/trips_model";
 import { Request, Response } from "express";
 
 export interface AuthRequest extends Request {
@@ -13,7 +13,6 @@ export interface AuthRequest extends Request {
 const updateUserById = async (req: AuthRequest, res: Response) => {
   console.log("putById method called");
   const userId = req.params.id;
-
   try {
     const obj = await Users.findOne({ _id: userId });
     if (!obj) {
@@ -26,7 +25,18 @@ const updateUserById = async (req: AuthRequest, res: Response) => {
       new: true,
     });
 
-    console.log(updateUser);
+    // עדכון הפרטים של המשתמש בכל הטיולים שבבעלותו
+    if (updateUser) {
+      await Trips.updateMany(
+        { owner: userId },
+        {
+          $set: {
+            userName: updateUser.userName,
+            imgUrl: updateUser.imgUrl,
+          },
+        }
+      );
+    }
     res.status(200).send(updateUser);
   } catch (err) {
     res.status(500).json({ message: err.message });

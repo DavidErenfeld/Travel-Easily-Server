@@ -6,6 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const port = process.env.PORT;
 app_1.default.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Example app listening at https://localhost:${port}`);
 });
 //# sourceMappingURL=server.js.map

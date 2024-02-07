@@ -23,12 +23,24 @@ const getAllTrips = async (req: Request, res: Response) => {
   }
 };
 
-const getById = async (req: Request, res: Response) => {
+const getByOwnerId = async (req: Request, res: Response) => {
   console.log(`get by id: ${req.params.id}`);
   try {
     // הנחתי שהמזהה של המשתמש מועבר כreq.params.id ולא כreq.params._id
-    const trips = await Trips.find({ owner: req.params.id }); // שימוש בfind במקום findById ותיקון הפרמטר לowner
-    res.send(trips);
+    const trips = await Trips.find({ owner: req.params.id });
+    if (trips.length > 0) return res.status(200).send(trips);
+    res.status(201).send(trips);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getByTripId = async (req: Request, res: Response) => {
+  console.log(`get by id: ${req.params.id}`);
+  try {
+    const trips = await Trips.find({ _id: req.params.id });
+    res.status(200).send(trips);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });
@@ -37,16 +49,20 @@ const getById = async (req: Request, res: Response) => {
 
 const post = async (req: AuthRequest, res: Response) => {
   console.log(`post user ${req.body}`);
-  const userId = req.user._id;
-  const userName = req.user.userName;
-  const imgUrl = req.user.imgUrl;
+  const userId = req.user?._id; // הוספת בדיקת אופציונלי במקרה ש-user אינו מוגדר
+  const userName = req.user?.userName;
+  const imgUrl = req.user?.imgUrl;
   req.body.owner = userId;
-  req.body.userName = userName;
+  req.body.userName = userName; // וודא שהשדה userName מועבר לגוף הבקשה
   req.body.imgUrl = imgUrl;
+  console.log(`Saving trip with userName: ${req.body.userName}`);
 
   const obj = new Trips(req.body);
   try {
     await obj.save();
+    console.log(`Trip saved with ID: ${obj._id} and userName: ${userName}`);
+    console.log(`Saving trip with userName: ${req.body.userName}`);
+
     res.status(200).send("OK");
   } catch (err) {
     console.log(err);
@@ -208,7 +224,8 @@ const addLike = async (req: AuthRequest, res: Response) => {
 
 export default {
   getAllTrips,
-  getById,
+  getByOwnerId,
+  getByTripId,
   post,
   putById,
   deleteById,
