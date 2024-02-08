@@ -10,6 +10,7 @@ const user: IUsers = {
   password: "12345667867",
   userName: "yechiel",
   imgUrl: "test/test",
+  authType: "application",
 };
 
 const userLogin = {
@@ -85,20 +86,4 @@ describe("--User Tests--", () => {
     console.log(res.body);
     expect(res.status).toBe(500);
   });
-
-  // test("Test 5.2 update trip by id-- fail--id is not found", async () => {
-  //   console.log("update user by id-- fail--id is not found");
-
-  //   const res = await request(app)
-  //     .put(`/users/${}`)
-  //     .set("Authorization", "JWT " + accessToken)
-  //     .send({
-  //       owner: "Davhntbgrvid",
-  //       country: "Countnhtbgrvry",
-  //       numOfDays: 1,
-  //       tripDescription: ",oimunytbr",
-  //     });
-
-  //   expect(res.statusCode).toBe(404);
-  // });
 });

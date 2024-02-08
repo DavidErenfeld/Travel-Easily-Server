@@ -3,10 +3,11 @@ import mongoose from "mongoose";
 export interface IUsers {
   _id?: string;
   email: string;
-  password: string;
+  password?: string;
   userName: string;
   imgUrl?: string;
   tokens?: string[];
+  authType: string;
 }
 
 const usersSchema = new mongoose.Schema<IUsers>({
@@ -20,7 +21,7 @@ const usersSchema = new mongoose.Schema<IUsers>({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
   imgUrl: {
     type: String,
@@ -28,6 +29,11 @@ const usersSchema = new mongoose.Schema<IUsers>({
   tokens: {
     type: [String],
     required: false,
+  },
+  authType: {
+    type: String,
+    required: true,
+    default: "application", // ערך ברירת מחדל עבור משתמשים שנרשמים דרך האפליקציה
   },
 });
 

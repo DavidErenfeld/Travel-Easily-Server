@@ -4,7 +4,8 @@ import tripsController from "../controllers/trips_controller";
 import authMiddleWare from "../common/auth_middleware";
 
 router.get("/", tripsController.getAllTrips);
-router.get("/:id", authMiddleWare, tripsController.getById);
+router.get("/:id", authMiddleWare, tripsController.getByOwnerId);
+router.get("/trip/:id", authMiddleWare, tripsController.getByTripId);
 router.post("/", authMiddleWare, tripsController.post);
 router.put("/:id", authMiddleWare, tripsController.putById);
 router.delete(

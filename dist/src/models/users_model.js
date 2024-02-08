@@ -15,7 +15,7 @@ const usersSchema = new mongoose_1.default.Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     imgUrl: {
         type: String,
@@ -23,6 +23,11 @@ const usersSchema = new mongoose_1.default.Schema({
     tokens: {
         type: [String],
         required: false,
+    },
+    authType: {
+        type: String,
+        required: true,
+        default: "application", // ערך ברירת מחדל עבור משתמשים שנרשמים דרך האפליקציה
     },
 });
 exports.default = mongoose_1.default.model("User", usersSchema);

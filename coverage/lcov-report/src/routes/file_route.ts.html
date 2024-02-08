@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -100,43 +100,43 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from "express";
 const router = express.Router();
 import multer from "multer";
@@ -145,32 +145,32 @@ import multer from "multer";
 const base = "http://localhost:3000";
 &nbsp;
 const storage = multer.diskStorage({
-  destination: <span class="fstat-no" title="function not covered" >function (r</span>eq, file, cb) {
-<span class="cstat-no" title="statement not covered" >    cb(null, "public/");</span>
+  destination: function (req, file, cb) {
+    cb(null, "public/");
   },
-  filename: <span class="fstat-no" title="function not covered" >function (r</span>eq, file, cb) {
-    const ext = <span class="cstat-no" title="statement not covered" >file.originalname.split(".").pop();</span>
-    const date = <span class="cstat-no" title="statement not covered" >new Date();</span>
-    const formattedDate = <span class="cstat-no" title="statement not covered" >date</span>
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split(".").pop();
+    const date = new Date();
+    const formattedDate = date
       .toISOString()
       .replace(/:/g, "-") // מחליף נקודותיים במקף כדי להימנע מבעיות בשמות קבצים
       .replace(/\..+$/, ""); // מסיר את החלק של המילישניות ו-Z
-<span class="cstat-no" title="statement not covered" >    cb(null, formattedDate + "." + ext);</span>
+    cb(null, formattedDate + "." + ext);
   },
 });
 &nbsp;
 const upload = multer({ storage: storage });
 &nbsp;
 // נתיב להעלאת קבצים
-router.post("/", upload.single("file"), <span class="fstat-no" title="function not covered" >function (r</span>eq, res) {
+router.post("/", upload.single("file"), function (req, res) {
   // המרה של נתיבי חלונות לנתיבים תקניים
-  const filePath = <span class="cstat-no" title="statement not covered" >req.file.path.replace(/\\/g, "/");</span>
+  const filePath = req.file.path.replace(/\\/g, "/");
 &nbsp;
   // הדפסת הנתיב של הקובץ המועלה
-<span class="cstat-no" title="statement not covered" >  console.log("router.post(/file: " + base + "/" + filePath);</span>
+  console.log("router.post(/file: " + base + "/" + filePath);
 &nbsp;
   // שליחת תגובה עם ה-URL של הקובץ המועלה
-<span class="cstat-no" title="statement not covered" >  res.status(200).send({ url: base + "/" + filePath });</span>
+  res.status(200).send({ url: base + "/" + filePath });
 });
 &nbsp;
 export = router;
@@ -181,7 +181,7 @@ export = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-05T20:53:27.829Z
+                at 2024-02-08T09:42:03.452Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

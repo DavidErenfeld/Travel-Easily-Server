@@ -23,12 +23,23 @@ const getAllTrips = async (req: Request, res: Response) => {
   }
 };
 
-const getById = async (req: Request, res: Response) => {
+const getByOwnerId = async (req: Request, res: Response) => {
   console.log(`get by id: ${req.params.id}`);
   try {
     // הנחתי שהמזהה של המשתמש מועבר כreq.params.id ולא כreq.params._id
-    const trips = await Trips.find({ owner: req.params.id }); // שימוש בfind במקום findById ותיקון הפרמטר לowner
-    res.send(trips);
+    const trips = await Trips.find({ owner: req.params.id });
+    if (trips.length > 0) return res.status(200).send(trips);
+    res.status(201).send(trips);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getByTripId = async (req: Request, res: Response) => {
+  try {
+    const trips = await Trips.find({ _id: req.params.id });
+    res.status(200).send(trips);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });
@@ -36,17 +47,15 @@ const getById = async (req: Request, res: Response) => {
 };
 
 const post = async (req: AuthRequest, res: Response) => {
-  console.log(`post user ${req.body}`);
-  const userId = req.user._id;
-  const userName = req.user.userName;
-  const imgUrl = req.user.imgUrl;
-  req.body.owner = userId;
-  req.body.userName = userName;
-  req.body.imgUrl = imgUrl;
+  console.log(`post trip ${req.body}`);
+  const userId = req.user._id; // הוספת בדיקת אופציונלי במקרה ש-user אינו מוגדר
 
-  const obj = new Trips(req.body);
+  req.body.owner = userId;
+  console.log(`Saving trip with userName: ${req.body.userName}`);
+
   try {
-    await obj.save();
+    const obj = await Trips.create(req.body);
+
     res.status(200).send("OK");
   } catch (err) {
     console.log(err);
@@ -208,7 +217,8 @@ const addLike = async (req: AuthRequest, res: Response) => {
 
 export default {
   getAllTrips,
-  getById,
+  getByOwnerId,
+  getByTripId,
   post,
   putById,
   deleteById,

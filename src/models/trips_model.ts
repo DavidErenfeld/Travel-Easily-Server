@@ -12,6 +12,7 @@ export interface ITrips {
   tripDescription: string[];
   numOfComments: number;
   numOfLikes: number;
+  tripPhotos?: string[];
 
   comments?: Array<{
     _id?: string;
@@ -55,6 +56,9 @@ const tripsSchema = new mongoose.Schema<ITrips>({
   numOfDays: {
     type: Number,
     required: true,
+  },
+  tripPhotos: {
+    type: [String],
   },
   tripDescription: {
     type: [String],
