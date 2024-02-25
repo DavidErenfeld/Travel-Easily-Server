@@ -58,7 +58,7 @@ describe("--Trips Tests--", () => {
 
   const trip2: ITrips = {
     owner: "moshe",
-    userName: "aa",
+    // userName: "aa",
     typeTraveler: "type Traveler 2",
     country: "Country 2",
     typeTrip: "type Trip 2",
@@ -103,7 +103,8 @@ describe("--Trips Tests--", () => {
     expect(data.length).toEqual(1);
     const trip = data[0];
     expect(trip.owner).toBe(userId); // השוואה נכונה לאחר שינוי
-    // expect(trip.userName).toBe(userName); // השוואה נכונה לאחר שינוי
+    expect(trip.userName).toBe(userName); // השוואה נכונה לאחר שינוי
+
     expect(trip.typeTraveler).toBe(trip1.typeTraveler);
     expect(trip.country).toBe(trip1.country);
     expect(trip.typeTrip).toBe(trip1.typeTrip);

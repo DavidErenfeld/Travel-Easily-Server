@@ -152,12 +152,26 @@ describe("--Auth Tests--", () => {
     expect(response1.status).toEqual(200);
   });
 
-  test("Test refresh token --file", async () => {
+  test("Test refresh token 2", async () => {
     const response = await request(app)
       .post("/auth/refresh")
       .set("Authorization", "JWT ")
       .send();
-    expect(response.statusCode).toBe(401);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.accessToken).toBeDefined();
+    expect(response.body.refreshToken).toBeDefined();
+    newRefreshToken = response.body.refreshToken;
+  });
+
+  test("Test refresh token 3", async () => {
+    const response = await request(app)
+      .post("/auth/refresh")
+      .set("Authorization", "JWT " + newRefreshToken)
+      .send();
+    expect(response.statusCode).toBe(200);
+    expect(response.body.accessToken).toBeDefined();
+    expect(response.body.refreshToken).toBeDefined();
+    newRefreshToken = response.body.refreshToken;
   });
 
   test("logeout test --file token is null", async () => {
