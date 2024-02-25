@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1708858579669" clover="3.2.0">
-  <project timestamp="1708858579669" name="All files">
+<coverage generated="1708895107454" clover="3.2.0">
+  <project timestamp="1708895107454" name="All files">
     <metrics statements="322" coveredstatements="282" conditionals="61" coveredconditionals="34" methods="40" coveredmethods="38" elements="423" coveredelements="354" complexity="0" loc="322" ncloc="322" packages="5" files="11" classes="11"/>
     <package name="src">
       <metrics statements="31" coveredstatements="31" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="app.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\app.ts">
+      <file name="app.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\app.ts">
         <metrics statements="31" coveredstatements="31" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -41,7 +41,7 @@
     </package>
     <package name="src.common">
       <metrics statements="14" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
-      <file name="auth_middleware.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\common\auth_middleware.ts">
+      <file name="auth_middleware.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\common\auth_middleware.ts">
         <metrics statements="14" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
         <line num="1" count="4" type="stmt"/>
         <line num="8" count="4" type="stmt"/>
@@ -61,7 +61,7 @@
     </package>
     <package name="src.controllers">
       <metrics statements="226" coveredstatements="187" conditionals="51" coveredconditionals="26" methods="35" coveredmethods="33"/>
-      <file name="auth_controller.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\controllers\auth_controller.ts">
+      <file name="auth_controller.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\controllers\auth_controller.ts">
         <metrics statements="104" coveredstatements="73" conditionals="41" coveredconditionals="19" methods="12" coveredmethods="10"/>
         <line num="2" count="4" type="stmt"/>
         <line num="3" count="4" type="stmt"/>
@@ -168,7 +168,7 @@
         <line num="237" count="1" type="stmt"/>
         <line num="275" count="4" type="stmt"/>
       </file>
-      <file name="trips_controller.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\controllers\trips_controller.ts">
+      <file name="trips_controller.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\controllers\trips_controller.ts">
         <metrics statements="107" coveredstatements="99" conditionals="8" coveredconditionals="5" methods="21" coveredmethods="21"/>
         <line num="1" count="4" type="stmt"/>
         <line num="15" count="16" type="stmt"/>
@@ -278,7 +278,7 @@
         <line num="198" count="2" type="stmt"/>
         <line num="223" count="4" type="stmt"/>
       </file>
-      <file name="user_controller.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\controllers\user_controller.ts">
+      <file name="user_controller.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\controllers\user_controller.ts">
         <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -299,13 +299,13 @@
     </package>
     <package name="src.models">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="trips_model.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\models\trips_model.ts">
+      <file name="trips_model.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\models\trips_model.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="30" count="4" type="stmt"/>
         <line num="92" count="4" type="stmt"/>
       </file>
-      <file name="users_model.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\models\users_model.ts">
+      <file name="users_model.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\models\users_model.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="13" count="4" type="stmt"/>
@@ -314,7 +314,7 @@
     </package>
     <package name="src.routes">
       <metrics statements="45" coveredstatements="45" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="auth_route.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\auth_route.ts">
+      <file name="auth_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\auth_route.ts">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -326,7 +326,7 @@
         <line num="255" count="4" type="stmt"/>
         <line num="257" count="4" type="stmt"/>
       </file>
-      <file name="file_route.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\file_route.ts">
+      <file name="file_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\file_route.ts">
         <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -345,7 +345,7 @@
         <line num="34" count="1" type="stmt"/>
         <line num="37" count="4" type="stmt"/>
       </file>
-      <file name="trips_route.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\trips_route.ts">
+      <file name="trips_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\trips_route.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -362,7 +362,7 @@
         <line num="31" count="4" type="stmt"/>
         <line num="37" count="4" type="stmt"/>
       </file>
-      <file name="user_route.ts" path="C:\Users\97250\Desktop\Travel Easily Server\src\routes\user_route.ts">
+      <file name="user_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\user_route.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
