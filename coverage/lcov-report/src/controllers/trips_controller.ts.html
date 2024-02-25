@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.92% </span>
+                <span class="strong">93.1% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>105/113</span>
+                <span class='fraction'>108/116</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.07% </span>
+                <span class="strong">92.3% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>93/101</span>
+                <span class='fraction'>96/104</span>
             </div>
         
             
@@ -291,7 +291,10 @@
 <a name='L226'></a><a href='#L226'>226</a>
 <a name='L227'></a><a href='#L227'>227</a>
 <a name='L228'></a><a href='#L228'>228</a>
-<a name='L229'></a><a href='#L229'>229</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -402,13 +405,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -442,15 +446,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -559,7 +565,7 @@ const getByOwnerId = async (req: Request, res: Response) =&gt; {
 &nbsp;
 const getByTripId = async (req: Request, res: Response) =&gt; {
   try {
-    const trips = await Trips.find({ _id: req.params.id });
+    const trips = await Trips.findOne({ _id: req.params.id });
     res.status(200).send(trips);
   } catch (err) {
     console.error(err);
@@ -629,6 +635,7 @@ const deleteById = async (req: AuthRequest, res: Response) =&gt; {
 };
 &nbsp;
 const addComment = async (req: AuthRequest, res: Response) =&gt; {
+  console.log("addComment");
   try {
     // קבלת מזהה הטיול מהנתיב
     const tripId = req.params.tripId;
@@ -636,7 +643,7 @@ const addComment = async (req: AuthRequest, res: Response) =&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!req.user) {
 <span class="cstat-no" title="statement not covered" >      return res.status(401).send("User not authenticated");</span>
     }
-    const userName = req.user.userName;
+    // const userName = req.user.userName;
     const owner_id = req.user._id;
     const { comment } = req.body;
 &nbsp;
@@ -649,9 +656,9 @@ const addComment = async (req: AuthRequest, res: Response) =&gt; {
     // הוספת התגובה למערך התגובות של הטיול
     trip.comments.push({
       ownerId: owner_id,
-      owner: userName,
-      comment: comment,
-      date: new Date(),
+      owner: comment.owner,
+      comment: comment.comment,
+      date: comment.date,
     });
     trip.numOfComments++;
 &nbsp;
@@ -659,7 +666,7 @@ const addComment = async (req: AuthRequest, res: Response) =&gt; {
     await trip.save();
 &nbsp;
     // שליחת המענה המעודכן
-    res.status(200).send(trip);
+    res.status(200).send(trip.comments);
   } catch (error) {
     // טיפול בשגיאות
     res.status(500).send(error.message);
@@ -667,6 +674,7 @@ const addComment = async (req: AuthRequest, res: Response) =&gt; {
 };
 &nbsp;
 const deleteComment = async (req: AuthRequest, res: Response) =&gt; {
+  console.log("DeleteComment");
   try {
     const tripId = req.params.tripId;
     const commentId = req.params.commentId; // מזהה המשתמש מהאימות
@@ -675,14 +683,15 @@ const deleteComment = async (req: AuthRequest, res: Response) =&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!trip) {
 <span class="cstat-no" title="statement not covered" >      return res.status(404).send("Trip not found");</span>
     }
-&nbsp;
+    console.log(`befor delete: ${trip}`);
     trip.comments = trip.comments.filter(
-      (comment) =&gt; comment._id === commentId
+      (comment) =&gt; comment._id.toString() !== commentId
     );
-    trip.numOfComments &gt; 0 ? trip.numOfComments-- : (<span class="branch-1 cbranch-no" title="branch not covered" >trip.numOfComments = 0)</span>;
+    trip.numOfComments = trip.comments.length;
+    console.log(`after delete: ${trip}`);
     await trip.save();
 &nbsp;
-    res.status(200).send(trip);
+    res.status(200).send(trip.comments);
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    res.status(500).send(error.message);</span>
   }
@@ -754,7 +763,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-08T09:42:03.452Z
+                at 2024-02-25T09:01:09.244Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

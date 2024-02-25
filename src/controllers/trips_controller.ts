@@ -38,7 +38,7 @@ const getByOwnerId = async (req: Request, res: Response) => {
 
 const getByTripId = async (req: Request, res: Response) => {
   try {
-    const trips = await Trips.find({ _id: req.params.id });
+    const trips = await Trips.findOne({ _id: req.params.id });
     res.status(200).send(trips);
   } catch (err) {
     console.error(err);
@@ -108,6 +108,7 @@ const deleteById = async (req: AuthRequest, res: Response) => {
 };
 
 const addComment = async (req: AuthRequest, res: Response) => {
+  console.log("addComment");
   try {
     // קבלת מזהה הטיול מהנתיב
     const tripId = req.params.tripId;
@@ -115,7 +116,7 @@ const addComment = async (req: AuthRequest, res: Response) => {
     if (!req.user) {
       return res.status(401).send("User not authenticated");
     }
-    const userName = req.user.userName;
+    // const userName = req.user.userName;
     const owner_id = req.user._id;
     const { comment } = req.body;
 
@@ -128,9 +129,9 @@ const addComment = async (req: AuthRequest, res: Response) => {
     // הוספת התגובה למערך התגובות של הטיול
     trip.comments.push({
       ownerId: owner_id,
-      owner: userName,
-      comment: comment,
-      date: new Date(),
+      owner: comment.owner,
+      comment: comment.comment,
+      date: comment.date,
     });
     trip.numOfComments++;
 
@@ -138,7 +139,7 @@ const addComment = async (req: AuthRequest, res: Response) => {
     await trip.save();
 
     // שליחת המענה המעודכן
-    res.status(200).send(trip);
+    res.status(200).send(trip.comments);
   } catch (error) {
     // טיפול בשגיאות
     res.status(500).send(error.message);
@@ -146,6 +147,7 @@ const addComment = async (req: AuthRequest, res: Response) => {
 };
 
 const deleteComment = async (req: AuthRequest, res: Response) => {
+  console.log("DeleteComment");
   try {
     const tripId = req.params.tripId;
     const commentId = req.params.commentId; // מזהה המשתמש מהאימות
@@ -154,14 +156,15 @@ const deleteComment = async (req: AuthRequest, res: Response) => {
     if (!trip) {
       return res.status(404).send("Trip not found");
     }
-
+    console.log(`befor delete: ${trip}`);
     trip.comments = trip.comments.filter(
-      (comment) => comment._id === commentId
+      (comment) => comment._id.toString() !== commentId
     );
-    trip.numOfComments > 0 ? trip.numOfComments-- : (trip.numOfComments = 0);
+    trip.numOfComments = trip.comments.length;
+    console.log(`after delete: ${trip}`);
     await trip.save();
 
-    res.status(200).send(trip);
+    res.status(200).send(trip.comments);
   } catch (error) {
     res.status(500).send(error.message);
   }

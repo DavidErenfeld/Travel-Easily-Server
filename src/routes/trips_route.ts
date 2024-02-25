@@ -34,11 +34,4 @@ router.post(
   tripsController.addLike.bind(tripsController)
 );
 
-// Remove like
-// router.delete(
-//   "/likes/:tripId",
-//   authMiddleWare,
-//   tripsController.removeLike.bind(tripsController)
-// );
-
 export default router;
