@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1708895107454" clover="3.2.0">
-  <project timestamp="1708895107454" name="All files">
+<coverage generated="1708895750181" clover="3.2.0">
+  <project timestamp="1708895750181" name="All files">
     <metrics statements="322" coveredstatements="282" conditionals="61" coveredconditionals="34" methods="40" coveredmethods="38" elements="423" coveredelements="354" complexity="0" loc="322" ncloc="322" packages="5" files="11" classes="11"/>
     <package name="src">
       <metrics statements="31" coveredstatements="31" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
@@ -319,12 +319,12 @@
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
         <line num="3" count="4" type="stmt"/>
-        <line num="96" count="4" type="stmt"/>
-        <line num="146" count="4" type="stmt"/>
+        <line num="83" count="4" type="stmt"/>
+        <line num="126" count="4" type="stmt"/>
         <line num="193" count="4" type="stmt"/>
-        <line num="231" count="4" type="stmt"/>
-        <line num="255" count="4" type="stmt"/>
-        <line num="257" count="4" type="stmt"/>
+        <line num="222" count="4" type="stmt"/>
+        <line num="271" count="4" type="stmt"/>
+        <line num="273" count="4" type="stmt"/>
       </file>
       <file name="file_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\file_route.ts">
         <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
@@ -339,11 +339,11 @@
         <line num="15" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
         <line num="23" count="4" type="stmt"/>
-        <line num="26" count="4" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="37" count="4" type="stmt"/>
+        <line num="65" count="4" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="76" count="4" type="stmt"/>
       </file>
       <file name="trips_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\trips_route.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -351,16 +351,16 @@
         <line num="2" count="4" type="stmt"/>
         <line num="3" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="7" count="4" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
-        <line num="9" count="4" type="stmt"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="11" count="4" type="stmt"/>
-        <line num="18" count="4" type="stmt"/>
-        <line num="24" count="4" type="stmt"/>
-        <line num="31" count="4" type="stmt"/>
-        <line num="37" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="92" count="4" type="stmt"/>
+        <line num="163" count="4" type="stmt"/>
+        <line num="204" count="4" type="stmt"/>
+        <line num="233" count="4" type="stmt"/>
+        <line num="280" count="4" type="stmt"/>
+        <line num="317" count="4" type="stmt"/>
+        <line num="359" count="4" type="stmt"/>
+        <line num="361" count="4" type="stmt"/>
       </file>
       <file name="user_route.ts" path="C:\Users\LENOVO\Desktop\Yechiel\PROJECT\99999\Travel Easily Server (4)\Travel Easily Server\src\routes\user_route.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -368,8 +368,8 @@
         <line num="2" count="4" type="stmt"/>
         <line num="3" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
+        <line num="62" count="4" type="stmt"/>
+        <line num="64" count="4" type="stmt"/>
       </file>
     </package>
   </project>

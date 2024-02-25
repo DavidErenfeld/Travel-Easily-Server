@@ -2,256 +2,272 @@ import express from "express";
 const router = express.Router();
 import AuthController from "../controllers/auth_controller";
 
-/**
- * @swagger
- * openapi: 3.0.3
- * info:
- *   title: My API
- *   description: This is a sample server for a user management system.
- *   version: "1.0"
- * servers:
- *   - url: http://localhost:3000/
- *     description: Local server
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - email
- *         - userName
- *         - authType
- *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated id of the user
- *         email:
- *           type: string
- *           description: The email of the user
- *         password:
- *           type: string
- *           description: The password of the user (optional for social login)
- *         userName:
- *           type: string
- *           description: The username of the user
- *         imgUrl:
- *           type: string
- *           description: The profile image URL of the user
- *         tokens:
- *           type: array
- *           items:
- *             type: string
- *           description: JWT tokens for authentication
- *         authType:
- *           type: string
- *           description: The authentication type (e.g., application, google)
- *       example:
- *         _id: "12345"
- *         email: "user@example.com"
- *         userName: "exampleUser"
- *         imgUrl: "http://example.com/img.jpg"
- *         authType: "application"
- *         tokens: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."]
- */
 
 /**
- * @swagger
- * /auth/register:
- *   post:
- *     summary: Registers a new user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               userName:
- *                 type: string
- *               imgUrl:
- *                 type: string
- *             required:
- *               - email
- *               - password
- *               - userName
- *           example:
- *             email: "newuser@example.com"
- *             password: "password123"
- *             userName: "newUser"
- *             imgUrl: "http://example.com/img.jpg"
- *     responses:
- *       200:
- *         description: User registered successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       400:
- *         description: Email already exists or missing data
- */
+* @swagger 
+* tags: 
+*   name: Auth 
+*   description:  This is an API for handling user authentication including login, registration, and token refresh. 
+*/
+
+
+/** 
+* @swagger 
+* components: 
+*   securitySchemes: 
+*     bearerAuth: 
+*       type: http 
+*       scheme: bearer 
+*       bearerFormat: JWT 
+*/
+
+/** 
+* @swagger 
+* components: 
+*   schemas: 
+*     User: 
+*       type: object 
+*       required: 
+*         - email 
+*         - password 
+*       properties: 
+*         email: 
+*           type: string 
+*           description: The user email 
+*         password: 
+*           type: string 
+*           description: The user password 
+*       example: 
+*         email: 'bob@gmail.com' 
+*         password: '123456' 
+*/
+
+
+
+/** 
+* @swagger 
+*   /auth/login:
+*    post:
+*      summary: Authenticates a user and returns tokens.
+*      tags: [Auth]  
+*      requestBody:
+*        required: true
+*        content:
+*          application/json:
+*            schema:
+*             $ref: '#/components/schemas/User'
+*      responses:
+*        '200':
+*          description: Successfully authenticated. Returns access and refresh tokens.
+*          content:
+*            application/json:
+*              schema:
+*                type: object
+*                properties:
+*                  userName:
+*                    type: string
+*                  imgUrl:
+*                    type: string
+*                  accessToken:
+*                    type: string
+*                  refreshToken:
+*                    type: string
+*                  user_Id:
+*                    type: string
+*        '400':
+*          description: Bad request, when some required fields are missing or credentials are invalid.
+*        '500':
+*          description: Server error.
+*/
+
+router.post("/login", AuthController.login);
+
+
+
+/** 
+* @swagger 
+*  /auth/register:
+*   post:
+*      summary: Registers a new user.
+*      tags: [Auth]  
+*      requestBody:
+*        required: true
+*        content:
+*          application/json:
+*            schema:
+*              type: object
+*              properties:
+*                email:
+*                  type: string
+*                  format: email
+*                password:
+*                  type: string
+*                userName:
+*                  type: string
+*                imgUrl:
+*                  type: string
+*              required:
+*                - email
+*                - password
+*                - userName
+*      responses:
+*        '200':
+*          description: User successfully registered.
+*          content:
+*            application/json:
+*              schema:
+*                $ref: '#/components/schemas/User'
+*        '400':
+*          description: Bad request, when some required fields are missing or the email is already in use.
+*        '500':
+*          description: Server error.
+*/
+
 router.post("/register", AuthController.register);
 
 /**
- * @swagger
- * /auth/login:
- *   post:
- *     summary: Logs in an existing user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *             required:
- *               - email
- *               - password
- *           example:
- *             email: "user@example.com"
- *             password: "password123"
- *     responses:
- *       200:
- *         description: User logged in successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 accessToken:
- *                   type: string
- *                 refreshToken:
- *                   type: string
- *                 imgUrl:
- *                   type: string
- *                 userName:
- *                   type: string
- *                 userId:
- *                   type: string
- *               example:
- *                 accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *                 refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *                 imgUrl: "http://example.com/img.jpg"
- *                 userName: "user"
- *                 userId: "12345"
- */
-router.post("/login", AuthController.login);
+* @swagger
+* /auth/google:
+*   post:
+*     summary: Sign in with Google
+*     tags: [Auth]
+*     description: Authenticates a user by Google Sign-In token.
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               token:
+*                 type: string
+*                 description: Google Sign-In token provided by the frontend.
+*             required:
+*               - token
+*     responses:
+*       '200':
+*         description: User successfully authenticated.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: User authenticated successfully.
+*                 user:
+*                   $ref: '#/components/schemas/User'
+*       '400':
+*         description: Bad request - Incorrect or missing token.
+*       '401':
+*         description: Unauthorized - Invalid token or token expired.
+*       '500':
+*         description: Internal server error - Something went wrong during the authentication process.
+*
+* components:
+*   schemas:
+*     User:
+*       type: object
+*       properties:
+*         _id:
+*           type: string
+*           description: Unique identifier for the user.
+*         email:
+*           type: string
+*           description: User's email address.
+*         name:
+*           type: string
+*           description: User's full name.
+*         profilePic:
+*           type: string
+*           description: URL to the user's profile picture.
+*       required:
+*         - _id
+*         - email
+*         - name
+*/
 
-/**
- * @swagger
- * /auth/google:
- *   post:
- *     summary: Authenticates a user using Google Sign-In
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               credential:
- *                 type: string
- *             required:
- *               - credential
- *           example:
- *             credential: "google-id-token"
- *     responses:
- *       200:
- *         description: User authenticated successfully with Google
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 accessToken:
- *                   type: string
- *                 refreshToken:
- *                   type: string
- *                 imgUrl:
- *                   type: string
- *                 userName:
- *                   type: string
- *                 userId:
- *                   type: string
- *               example:
- *                 accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *                 refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *                 imgUrl: "http://example.com/img.jpg"
- *                 userName: "user"
- *                 userId: "12345"
- */
+
+
 
 router.post("/google", AuthController.googleSignin);
 
-/**
- * @swagger
- * /auth/refresh:
- *   post:
- *     summary: Refreshes the user's authentication token
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               refreshToken:
- *                 type: string
- *             required:
- *               - refreshToken
- *           example:
- *             refreshToken: "refreshTokenHere"
- *     responses:
- *       200:
- *         description: Access token refreshed successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 accessToken:
- *                   type: string
- *                 refreshToken:
- *                   type: string
- *               example:
- *                 accessToken: "newAccessTokenHere"
- *                 refreshToken: "newRefreshTokenHere"
- */
+
+/** 
+* @swagger 
+*  /auth/logout:
+
+*    post:
+*      summary: Logs out a user by removing the refresh token.
+*      tags: [Auth]  
+*      requestBody:
+*        required: true
+*        content:
+*          application/json:
+*            schema:
+*              type: object
+*              properties:
+*                refreshToken:
+*                  type: string
+*              required:
+*                - refreshToken
+*      responses:
+*        '200':
+*          description: Successfully logged out.
+*        '401':
+*          description: Unauthorized, no token provided.
+*        '403':
+*          description: Forbidden, invalid token.
+*/
+router.post("/logout", AuthController.logout);
+
+
+
+/** 
+* @swagger 
+*  /auth/refresh:
+*    post:
+*      summary: Refreshes access token using refresh token.
+*      tags: [Auth]  
+*      requestBody:
+*        required: true
+*        content:
+*          application/json:
+*            schema:
+*              type: object
+*              properties:
+*                refreshToken:
+*                  type: string
+*              required:
+*                - refreshToken
+*      responses:
+*        '200':
+*          description: Successfully refreshed tokens.
+*        '401':
+*          description: Unauthorized, no token provided.
+*        '403':
+*          description: Forbidden, invalid token.
+
+*components:
+*  schemas:
+*    User:
+*      type: object
+*      properties:
+*        userName:
+*          type: string
+*        imgUrl:
+*          type: string
+*        email:
+*          type: string
+*          format: email
+*        password:
+*          type: string
+*        tokens:
+*          type: array
+*          items:
+*            type: string
+*/
 
 router.post("/refresh", AuthController.refresh);
-
-/**
- * @swagger
- * /auth/logout:
- *   post:
- *     summary: Logs out the user by invalidating the refresh token
- *     tags: [Auth]
- *     requestBody:
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               refreshToken:
- *                 type: string
- *           example:
- *             refreshToken: "refreshTokenHere"
- *     responses:
- *       200:
- *         description: User logged out successfully
- */
-
-router.post("/logout", AuthController.logout);
 
 export default router;
