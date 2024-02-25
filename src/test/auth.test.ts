@@ -155,7 +155,7 @@ describe("--Auth Tests--", () => {
   test("Test refresh token 2", async () => {
     const response = await request(app)
       .post("/auth/refresh")
-      .set("Authorization", "JWT ")
+      .set("Authorization", "JWT " + newRefreshToken)
       .send();
     expect(response.statusCode).toBe(200);
     expect(response.body.accessToken).toBeDefined();

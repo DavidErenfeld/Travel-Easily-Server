@@ -46,7 +46,7 @@ afterAll((done) => {
 describe("--Trips Tests--", () => {
   const trip1: ITrips = {
     userName: "aa",
-    owner: "David",
+    // owner: "David",
     typeTraveler: "type Traveler",
     country: "Country",
     typeTrip: "type Trip",
