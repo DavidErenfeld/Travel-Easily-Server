@@ -27,7 +27,7 @@ const usersSchema = new mongoose_1.default.Schema({
     authType: {
         type: String,
         required: true,
-        default: "application", // ערך ברירת מחדל עבור משתמשים שנרשמים דרך האפליקציה
+        default: "application", // Default value for users registered through the application
     },
 });
 exports.default = mongoose_1.default.model("User", usersSchema);

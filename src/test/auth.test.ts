@@ -38,13 +38,11 @@ let newRefreshToken: string;
 
 let accessToken1: string;
 let refreshToken1: string;
-//Delete DB before test
+
 beforeAll(async () => {
-  console.log("jest beforeAll");
   await UserModel.deleteMany();
 });
 
-//Close DB after test
 afterAll((done) => {
   mongoose.connection.close();
   done();
@@ -213,7 +211,6 @@ describe("--Auth Tests--", () => {
       .send();
     expect(response.statusCode).toEqual(200);
 
-    //verify that the new token is not valid as well
     const response1 = await request(app)
       .get("/auth/refresh")
       .set("Authorization", "JWT " + refreshToken)

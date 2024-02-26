@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 import cors from "cors";
 const app = express();
 
-// יבוא ראוטרים
 import tripsRoute from "./routes/trips_route";
 import authRoute from "./routes/auth_route";
 import fileRoute from "./routes/file_route";
@@ -34,7 +33,7 @@ const options = {
     },
     servers: [{ url: "http://localhost:3000" }],
   },
-  apis: ["./src/routes/*.ts"], // נתיב לקבצים שבהם יש הגדרות swagger
+  apis: ["./src/routes/*.ts"],
 };
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
@@ -43,7 +42,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// ראוטים
 app.use("/trips", tripsRoute);
 app.use("/auth", authRoute);
 app.use("/file", fileRoute);

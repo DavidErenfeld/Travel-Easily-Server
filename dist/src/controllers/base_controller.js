@@ -17,12 +17,12 @@ class BaseController {
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("get all trips");
-            const objects = yield this.model.find();
             try {
+                const objects = yield this.model.find();
                 res.status(200).send(objects);
             }
             catch (err) {
-                console.log(err);
+                console.error(err);
                 res.status(500).json({ message: err.message });
             }
         });
@@ -35,7 +35,7 @@ class BaseController {
                 res.send(obj);
             }
             catch (err) {
-                console.log(err);
+                console.error(err);
                 res.status(500).json({ message: err.message });
             }
         });
@@ -49,7 +49,7 @@ class BaseController {
                 res.status(200).send("OK");
             }
             catch (err) {
-                console.log(err);
+                console.error(err);
                 res.status(500).json({ message: err.message });
             }
         });

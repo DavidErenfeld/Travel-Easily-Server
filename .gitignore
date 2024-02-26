@@ -15,6 +15,9 @@ dist
 dist-ssr
 *.local
 .env
+client-cert.pem
+client-key.pem
+client.csr
 
 # Editor directories and files
 .vscode/*

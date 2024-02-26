@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserModel, { IUsers } from "../models/users_model";
+import UserModel from "../models/users_model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { AuthRequest } from "../common/auth_middleware";
@@ -8,7 +8,6 @@ import { OAuth2Client } from "google-auth-library";
 const client = new OAuth2Client();
 
 const googleSignin = async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const ticket = await client.verifyIdToken({
       idToken: req.body.credential,
@@ -22,18 +21,17 @@ const googleSignin = async (req: Request, res: Response) => {
       if (user === null) {
         user = await UserModel.create({
           email: email,
-          authType: "google", // סוג האימות
+          authType: "google",
           imgUrl: payload?.picture,
           userName: payload?.name,
         });
       }
       const accessToken = jwt.sign(
-        { _id: user._id, userName: user.userName, imgUrl: user.imgUrl }, // Add userName here
+        { _id: user._id, userName: user.userName, imgUrl: user.imgUrl },
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRATION }
       );
 
-      // Create refreshToken
       const refreshToken = await jwt.sign(
         { _id: user._id },
         process.env.JWT_REFRESH_SECRET
@@ -43,7 +41,6 @@ const googleSignin = async (req: Request, res: Response) => {
       const imgUrl = user.imgUrl;
       const userId = user._id;
 
-      // Put refreshToken in the DB
       if (user.tokens == null) {
         user.tokens = [refreshToken];
       } else {
@@ -64,7 +61,6 @@ const googleSignin = async (req: Request, res: Response) => {
 };
 
 const register = async (req: AuthRequest, res: Response) => {
-  console.log("register");
   const email = req.body.email;
   const password = req.body.password;
   const userName = req.body.userName;
@@ -99,7 +95,6 @@ const register = async (req: AuthRequest, res: Response) => {
 };
 
 const login = async (req: AuthRequest, res: Response) => {
-  console.log("login");
   const email = req.body.email;
   const password = req.body.password;
 
@@ -120,15 +115,12 @@ const login = async (req: AuthRequest, res: Response) => {
       }
     }
 
-    // Create accessToken
-    // Create accessToken with userName
     const accessToken = jwt.sign(
-      { _id: user._id, userName: user.userName, imgUrl: user.imgUrl }, // Add userName here
+      { _id: user._id, userName: user.userName, imgUrl: user.imgUrl },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRATION }
     );
 
-    // Create refreshToken
     const refreshToken = await jwt.sign(
       { _id: user._id, userName: user.userName, imgUrl: user.imgUrl },
       process.env.JWT_REFRESH_SECRET
@@ -138,14 +130,12 @@ const login = async (req: AuthRequest, res: Response) => {
     const imgUrl = user.imgUrl;
     const userId = user._id;
 
-    // Put refreshToken in the DB
     if (user.tokens == null) {
       user.tokens = [refreshToken];
     } else {
       user.tokens.push(refreshToken);
     }
     await user.save();
-    console.log(accessToken);
     res.status(200).send({
       imgUrl: imgUrl,
       userName: userName,
@@ -169,11 +159,10 @@ const refresh = async (req: AuthRequest, res: Response) => {
     async (err, user: { _id: string }) => {
       if (err) {
         console.log(err);
-        return res.sendStatus(403); // Forbidden - token invalid
+        return res.sendStatus(403);
       }
 
       try {
-        // נסה לעדכן את המשתמש ולהוסיף את ה-refresh token החדש לרשימה
         const newAccessToken = jwt.sign(
           { _id: user._id },
           process.env.JWT_SECRET,
@@ -184,10 +173,9 @@ const refresh = async (req: AuthRequest, res: Response) => {
           process.env.JWT_REFRESH_SECRET
         );
 
-        // עדכון רשימת ה-tokens באמצעות findOneAndUpdate
         const updatedUser = await UserModel.findOneAndUpdate(
           { _id: user._id },
-          { $push: { tokens: newRefreshToken } }, // הוספת ה-refresh token החדש
+          { $push: { tokens: newRefreshToken } },
           { new: true }
         );
 
@@ -211,7 +199,7 @@ const logout = async (req: AuthRequest, res: Response) => {
   const authHeader = req.headers["authorization"];
   const refreshToken = authHeader && authHeader.split(" ")[1];
   if (!refreshToken) {
-    return res.sendStatus(401); // Unauthorized - No token provided
+    return res.sendStatus(401);
   }
 
   try {
@@ -220,56 +208,19 @@ const logout = async (req: AuthRequest, res: Response) => {
     if (typeof decoded === "object" && "_id" in decoded) {
       const userId = decoded._id;
 
-      // מציאת המשתמש והסרת הטוקן מהרשימה
       await UserModel.updateOne(
         { _id: userId },
         { $pull: { tokens: refreshToken } }
       );
 
-      res.sendStatus(200); // Successfully logged out
+      res.sendStatus(200);
     } else {
-      // טיפול במקרה שה-decoded לא מכיל את המידע הנדרש
       throw new Error("Invalid token payload.");
     }
   } catch (err) {
-    // במקרה של טוקן לא תקף או בעיה אחרת
     console.error("Error during logout: ", err);
-    return res.sendStatus(403); // Forbidden - Invalid token
+    return res.sendStatus(403);
   }
 };
-
-// const logout = async (req: AuthRequest, res: Response) => {
-//   const authHeader = req.headers["authorization"];
-//   const refreshToken = authHeader && authHeader.split(" ")[1];
-//   if (!refreshToken) {
-//     return res.sendStatus(401); // Unauthorized - No token provided
-//   }
-
-//   try {
-//     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-
-//     if (typeof decoded === "object" && "_id" in decoded) {
-//       const userId = decoded._id;
-
-//       // מציאת המשתמש והסרת הטוקן מהרשימה
-//       await UserModel.updateOne(
-//         { _id: userId },
-//         { $pull: { tokens: refreshToken } }
-//       );
-
-//       localStorage.removeItem("accessToken");
-//       localStorage.removeItem("refreshToken");
-
-//       res.sendStatus(200); // Successfully logged out
-//     } else {
-//       // טיפול במקרה שה-decoded לא מכיל את המידע הנדרש
-//       throw new Error("Invalid token payload.");
-//     }
-//   } catch (err) {
-//     // במקרה של טוקן לא תקף או בעיה אחרת
-//     console.error("Error during logout: ", err);
-//     return res.sendStatus(403); // Forbidden - Invalid token
-//   }
-// };
 
 export default { login, logout, register, refresh, googleSignin };

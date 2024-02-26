@@ -2,7 +2,7 @@ import app from "./app";
 import fs from "fs";
 import https from "https";
 import http from "http";
-// הגדרת HTTPS לסביבת פרודקשן וHTTP לסביבת פיתוח
+
 if (process.env.NODE_ENV === "production") {
   const httpsOptions = {
     key: fs.readFileSync(process.env.SSL_KEY_PATH),
@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === "production") {
     );
   });
 } else {
-  // הגדרת HTTP לסביבת פיתוח
   http.createServer(app).listen(process.env.PORT || 3000, () => {
     console.log(
       `Server running in development on http://localhost:${

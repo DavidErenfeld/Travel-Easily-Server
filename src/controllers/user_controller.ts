@@ -3,10 +3,10 @@ import Trips from "../models/trips_model";
 import { Request, Response } from "express";
 
 export interface AuthRequest extends Request {
-  user?: {
-    _id: string;
-    userName: string;
-    imgUrl: string;
+  user: {
+    _id?: string;
+    userName?: string;
+    imgUrl?: string;
   };
 }
 
@@ -25,8 +25,8 @@ const updateUserById = async (req: AuthRequest, res: Response) => {
       new: true,
     });
 
-    // עדכון הפרטים של המשתמש בכל הטיולים שבבעלותו
     if (updateUser) {
+      // Update user details in all trips owned by the user
       await Trips.updateMany(
         { owner: userId },
         {

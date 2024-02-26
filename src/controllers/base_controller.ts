@@ -9,11 +9,11 @@ export class BaseController<ObjectInterface> {
 
   async get(req: Request, res: Response) {
     console.log("get all trips");
-    const objects = await this.model.find();
     try {
+      const objects = await this.model.find();
       res.status(200).send(objects);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ message: err.message });
     }
   }
@@ -24,7 +24,7 @@ export class BaseController<ObjectInterface> {
       const obj = await this.model.findById(req.params.id);
       res.send(obj);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ message: err.message });
     }
   }
@@ -36,7 +36,7 @@ export class BaseController<ObjectInterface> {
       await obj.save();
       res.status(200).send("OK");
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ message: err.message });
     }
   }
@@ -75,6 +75,9 @@ export class BaseController<ObjectInterface> {
   }
 }
 
-const createController = <ObjectInterface>(model: Model<ObjectInterface>) =>
+const createController = <ObjectInterface>(
+  model: Model<ObjectInterface>
+): BaseController<ObjectInterface> =>
   new BaseController<ObjectInterface>(model);
+
 export default createController;

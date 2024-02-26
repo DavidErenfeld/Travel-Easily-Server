@@ -33,7 +33,7 @@ const usersSchema = new mongoose.Schema<IUsers>({
   authType: {
     type: String,
     required: true,
-    default: "application", // ערך ברירת מחדל עבור משתמשים שנרשמים דרך האפליקציה
+    default: "application", // Default value for users registered through the application
   },
 });
 
