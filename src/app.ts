@@ -31,7 +31,8 @@ const options = {
       version: "1.0.0",
       description: "A simple CRUD API application",
     },
-    servers: [{ url: "http://localhost:3000" }],
+
+    servers: [{ url: "https://10.10.248.179" }],
   },
   apis: ["./src/routes/*.ts"],
 };

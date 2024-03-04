@@ -46,10 +46,10 @@ const getByTripId = async (req: Request, res: Response) => {
 const post = async (req: AuthRequest, res: Response) => {
   console.log(`post trip ${req.body}`);
   const userId = req.user._id;
-  const userName = req.user.userName;
-  console.log(`-------------${userName}`);
+  
+ 
   req.body.owner = userId;
-  req.body.userName = userName;
+
   console.log(`Saving trip with userName: ${req.body.userName}`);
 
   try {
@@ -198,3 +198,5 @@ export default {
   deleteComment,
   addLike,
 };
+
+

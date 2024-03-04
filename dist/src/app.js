@@ -10,7 +10,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
-// יבוא ראוטרים
 const trips_route_1 = __importDefault(require("./routes/trips_route"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
 const file_route_1 = __importDefault(require("./routes/file_route"));
@@ -34,16 +33,15 @@ const options = {
             version: "1.0.0",
             description: "A simple CRUD API application",
         },
-        servers: [{ url: "http://localhost:3000" }],
+        servers: [{ url: "https://10.10.248.179" }],
     },
-    apis: ["./src/routes/*.ts"], // נתיב לקבצים שבהם יש הגדרות swagger
+    apis: ["./src/routes/*.ts"],
 };
 const specs = (0, swagger_jsdoc_1.default)(options);
 app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(specs));
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
-// ראוטים
 app.use("/trips", trips_route_1.default);
 app.use("/auth", auth_route_1.default);
 app.use("/file", file_route_1.default);

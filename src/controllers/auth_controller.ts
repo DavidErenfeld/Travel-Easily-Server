@@ -224,3 +224,4 @@ const logout = async (req: AuthRequest, res: Response) => {
 };
 
 export default { login, logout, register, refresh, googleSignin };
+

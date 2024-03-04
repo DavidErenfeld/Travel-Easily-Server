@@ -3,7 +3,7 @@ const router = express.Router();
 import multer from "multer";
 
 // Define the base URL for the server
-const base = "http://localhost:3000";
+const base = "https://10.10.248.179";
 
 // Configure multer storage settings
 const storage = multer.diskStorage({

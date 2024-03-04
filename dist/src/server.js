@@ -7,7 +7,6 @@ const app_1 = __importDefault(require("./app"));
 const fs_1 = __importDefault(require("fs"));
 const https_1 = __importDefault(require("https"));
 const http_1 = __importDefault(require("http"));
-// הגדרת HTTPS לסביבת פרודקשן וHTTP לסביבת פיתוח
 if (process.env.NODE_ENV === "production") {
     const httpsOptions = {
         key: fs_1.default.readFileSync(process.env.SSL_KEY_PATH),
@@ -18,7 +17,6 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 else {
-    // הגדרת HTTP לסביבת פיתוח
     http_1.default.createServer(app_1.default).listen(process.env.PORT || 3000, () => {
         console.log(`Server running in development on http://localhost:${process.env.PORT || 3000}`);
     });
