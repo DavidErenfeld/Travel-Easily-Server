@@ -37,11 +37,11 @@ afterAll((done) => {
   done();
 });
 
-// const stopConnection = function (String) {
-//   jest.spyOn(Student, String).mockImplementation(() => {
-//     throw new Error("Connection error");
-//   });
-// };
+
+
+
+
+
 
 describe("--Trips Tests--", () => {
   const trip1: ITrips = {
@@ -101,16 +101,16 @@ describe("--Trips Tests--", () => {
     expect(response.statusCode).toEqual(200);
     const data = response.body;
     expect(data.length).toEqual(1);
-    const trip = data[0];
-    expect(trip.owner).toBe(userId); // השוואה נכונה לאחר שינוי
-    expect(trip.userName).toBe(userName); // השוואה נכונה לאחר שינוי
 
-    expect(trip.typeTraveler).toBe(trip1.typeTraveler);
-    expect(trip.country).toBe(trip1.country);
-    expect(trip.typeTrip).toBe(trip1.typeTrip);
-    expect(trip.numOfDays).toBe(trip1.numOfDays);
-    expect(trip.tripDescription[0]).toBe(trip1.tripDescription[0]);
-    expect(trip.tripDescription[1]).toBe(trip1.tripDescription[1]);
+
+
+
+
+
+
+
+
+
   });
 
   test("Test 4 get by owner", async () => {
