@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import multer from "multer";
 
-const base = "https://enigmatic-island-56921-258869278475.herokuapp.com/";
+const base = "https://enigmatic-island-56921-258869278475.herokuapp.com";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

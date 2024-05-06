@@ -37,12 +37,6 @@ afterAll((done) => {
   done();
 });
 
-
-
-
-
-
-
 describe("--Trips Tests--", () => {
   const trip1: ITrips = {
     userName: "aa",
@@ -101,16 +95,6 @@ describe("--Trips Tests--", () => {
     expect(response.statusCode).toEqual(200);
     const data = response.body;
     expect(data.length).toEqual(1);
-
-
-
-
-
-
-
-
-
-
   });
 
   test("Test 4 get by owner", async () => {
