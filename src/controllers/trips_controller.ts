@@ -113,7 +113,7 @@ const addComment = async (req: AuthRequest, res: Response) => {
     }
 
     const owner_id = req.user._id;
-    const { comment, owner, date } = req.body;
+    const { comment } = req.body;
 
     const trip = await Trips.findById(tripId);
     if (!trip) {
@@ -122,9 +122,9 @@ const addComment = async (req: AuthRequest, res: Response) => {
 
     trip.comments.push({
       ownerId: owner_id,
-      owner: owner,
-      comment: comment,
-      date: date,
+      owner: comment.owner,
+      comment: comment.comment,
+      date: comment.date,
     });
     trip.numOfComments++;
 
