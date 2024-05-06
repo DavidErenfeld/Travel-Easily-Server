@@ -13,12 +13,12 @@ if (process.env.NODE_ENV === "production") {
         cert: fs_1.default.readFileSync(process.env.SSL_CERT_PATH),
     };
     https_1.default.createServer(httpsOptions, app_1.default).listen(process.env.HTTPS_PORT, () => {
-        console.log(`Server running in production on https://localhost:${process.env.HTTPS_PORT}`);
+        console.log(`Server running in production on https://enigmatic-island-56921-258869278475.herokuapp.com/${process.env.HTTPS_PORT}`);
     });
 }
 else {
     http_1.default.createServer(app_1.default).listen(process.env.PORT || 3000, () => {
-        console.log(`Server running in development on http://localhost:${process.env.PORT || 3000}`);
+        console.log(`Server running in development on https://enigmatic-island-56921-258869278475.herokuapp.com/${process.env.PORT || 3000}`);
     });
 }
 //# sourceMappingURL=server.js.map

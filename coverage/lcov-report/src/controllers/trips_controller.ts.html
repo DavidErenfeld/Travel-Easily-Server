@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.48% </span>
+                <span class="strong">21.55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/116</span>
+                <span class='fraction'>25/116</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">19.04% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/21</span>
+                <span class='fraction'>4/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10.57% </span>
+                <span class="strong">22.11% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/104</span>
+                <span class='fraction'>23/104</span>
             </div>
         
             
@@ -278,10 +278,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -311,21 +311,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -479,11 +479,11 @@ export interface AuthRequest extends Request {
   };
 }
 &nbsp;
-const getAllTrips = <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-<span class="cstat-no" title="statement not covered" >  console.log("get all trips");</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const objects = <span class="cstat-no" title="statement not covered" >await Trips.find();</span>
-<span class="cstat-no" title="statement not covered" >    res.status(200).send(objects);</span>
+const getAllTrips = async (req: Request, res: Response) =&gt; {
+  console.log("get all trips");
+  try {
+    const objects = await Trips.find();
+    res.status(200).send(objects);
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    console.error(err);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).json({ message: err.message });</span>
@@ -512,22 +512,22 @@ const getByTripId = <span class="fstat-no" title="function not covered" >async (
   }
 };
 &nbsp;
-const post = <span class="fstat-no" title="function not covered" >async (r</span>eq: AuthRequest, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-<span class="cstat-no" title="statement not covered" >  console.log(`post trip ${req.body}`);</span>
-  const userId = <span class="cstat-no" title="statement not covered" >req.user._id;</span>
+const post = async (req: AuthRequest, res: Response) =&gt; {
+  console.log(`post trip ${req.body}`);
+  const userId = req.user._id;
   
  
-<span class="cstat-no" title="statement not covered" >  req.body.owner = userId;</span>
+  req.body.owner = userId;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  console.log(`Saving trip with userName: ${req.body.userName}`);</span>
+  console.log(`Saving trip with userName: ${req.body.userName}`);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const obj = <span class="cstat-no" title="statement not covered" >await Trips.create(req.body);</span>
+  try {
+    const obj = await Trips.create(req.body);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    res.status(200).send("OK");</span>
   } catch (err) {
-<span class="cstat-no" title="statement not covered" >    console.log(err);</span>
-<span class="cstat-no" title="statement not covered" >    res.status(500).json({ message: err.message });</span>
+    console.log(err);
+    res.status(500).json({ message: err.message });
   }
 };
 &nbsp;
@@ -676,7 +676,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-06T13:44:50.585Z
+                at 2024-05-06T18:02:31.491Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

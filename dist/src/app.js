@@ -33,7 +33,9 @@ const options = {
             version: "1.0.0",
             description: "A simple CRUD API application",
         },
-        servers: [{ url: "https://10.10.248.179" }],
+        servers: [
+            { url: "https://enigmatic-island-56921-258869278475.herokuapp.com/" },
+        ],
     },
     apis: ["./src/routes/*.ts"],
 };
