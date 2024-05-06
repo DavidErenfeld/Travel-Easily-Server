@@ -10,13 +10,13 @@ if (process.env.NODE_ENV === "production") {
   };
   https.createServer(httpsOptions, app).listen(process.env.HTTPS_PORT, () => {
     console.log(
-      `Server running in production on https://localhost:${process.env.HTTPS_PORT}`
+      `Server running in production on https://enigmatic-island-56921-258869278475.herokuapp.com/${process.env.HTTPS_PORT}`
     );
   });
 } else {
   http.createServer(app).listen(process.env.PORT || 3000, () => {
     console.log(
-      `Server running in development on http://localhost:${
+      `Server running in development on https://enigmatic-island-56921-258869278475.herokuapp.com/${
         process.env.PORT || 3000
       }`
     );
