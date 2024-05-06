@@ -2,22 +2,19 @@ import express from "express";
 const router = express.Router();
 import multer from "multer";
 
-// Define the base URL for the server
-const base = "https://node19.cs.colman.ac.il";
+const base = "https://enigmatic-island-56921-258869278475.herokuapp.com/";
 
-// Configure multer storage settings
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/");
   },
   filename: function (req, file, cb) {
-    // Generate a unique filename using the current timestamp
     const ext = file.originalname.split(".").pop();
     const date = new Date();
     const formattedDate = date
       .toISOString()
-      .replace(/:/g, "-") // Replace colons with dashes to avoid filename issues
-      .replace(/\..+$/, ""); // Remove milliseconds and Z from the timestamp
+      .replace(/:/g, "-")
+      .replace(/\..+$/, "");
     cb(null, formattedDate + "." + ext);
   },
 });
@@ -59,16 +56,9 @@ const upload = multer({ storage: storage });
  *       '500':
  *         description: Internal server error - Something went wrong on the server.
  */
-
-// Route for uploading files
 router.post("/", upload.single("file"), function (req, res) {
-  // Convert Windows paths to valid paths
   const filePath = req.file.path.replace(/\\/g, "/");
-
-  // Log the path of the uploaded file
   console.log("router.post(/file: " + base + "/" + filePath);
-
-  // Send a response with the URL of the uploaded file
   res.status(200).send({ url: base + "/" + filePath });
 });
 
