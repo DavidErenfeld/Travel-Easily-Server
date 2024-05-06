@@ -46,8 +46,7 @@ const getByTripId = async (req: Request, res: Response) => {
 const post = async (req: AuthRequest, res: Response) => {
   console.log(`post trip ${req.body}`);
   const userId = req.user._id;
-  
- 
+
   req.body.owner = userId;
 
   console.log(`Saving trip with userName: ${req.body.userName}`);
@@ -114,7 +113,7 @@ const addComment = async (req: AuthRequest, res: Response) => {
     }
 
     const owner_id = req.user._id;
-    const { comment } = req.body;
+    const comment = req.body;
 
     const trip = await Trips.findById(tripId);
     if (!trip) {
@@ -198,5 +197,3 @@ export default {
   deleteComment,
   addLike,
 };
-
-
