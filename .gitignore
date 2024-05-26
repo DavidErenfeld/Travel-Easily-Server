@@ -1,5 +1,3 @@
-
-
 # Logs
 logs
 *.log
@@ -9,10 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Coverage directory
 coverage
+
+# Node modules
 node_modules
+
+# Build output directories
 dist
 dist-ssr
+
+# Environment variables
 *.local
 .env
 client-cert.pem
@@ -29,4 +34,6 @@ client.csr
 *.njsproj
 *.sln
 *.sw?
-*.env
+
+# Ignore public images
+/public/*.png

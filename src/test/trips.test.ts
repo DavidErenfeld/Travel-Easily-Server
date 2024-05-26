@@ -1,9 +1,8 @@
 import request from "supertest";
 import app from "../app";
-import mongoose, { now } from "mongoose";
+import mongoose from "mongoose";
 import TripsModel, { ITrips } from "../models/trips_model";
 import UsersModel, { IUsers } from "../models/users_model";
-import { AuthRequest } from "../controllers/trips_controller";
 
 const user: IUsers = {
   email: "test@trip.com",
@@ -20,14 +19,14 @@ const userLogin = {
 let accessToken: string;
 let userId: string;
 let userName: string;
-//Delete DB before test
+
 beforeAll(async () => {
   console.log("jest beforeAll");
   await TripsModel.deleteMany();
   await UsersModel.deleteMany();
   const responseRegister = await request(app).post("/auth/register").send(user);
-  userId = responseRegister.body._id; // שמירת ה-_id של המשתמש לשימוש בבדיקות
-  userName = responseRegister.body.userName; // שמירת ה-_id של המשתמש לשימוש בבדיקות
+  userId = responseRegister.body._id;
+  userName = responseRegister.body.userName;
   const responseLogin = await request(app).post("/auth/login").send(user);
   accessToken = responseLogin.body.accessToken;
 });
@@ -63,13 +62,11 @@ describe("--Trips Tests--", () => {
     numOfLikes: 0,
   };
   const nonExistingId = new mongoose.Types.ObjectId();
-  //FUNCTION  Add a new trip and send to the DB
   const addNewTrip = async (trip: ITrips) => {
     const response = await request(app)
       .post("/trips")
       .set("Authorization", "JWT " + accessToken)
       .send(trip);
-    console.log(`----------------------${response}`);
 
     expect(response.statusCode).toEqual(200);
     expect(response.text).toEqual("OK");
@@ -78,10 +75,8 @@ describe("--Trips Tests--", () => {
   test("1 Test get all trips - empty collection", async () => {
     console.log("Test get all trips -- 0 trips");
     const response = await request(app).get("/trips");
-    // console.log(`=================${response}==================`);
     expect(response.statusCode).toEqual(200);
     const data = response.body;
-    // console.log(`=================${data}==================`);
     expect(data.length).toEqual(0);
   });
 

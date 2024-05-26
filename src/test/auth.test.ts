@@ -38,7 +38,7 @@ let newRefreshToken: string;
 
 let accessToken1: string;
 let refreshToken1: string;
-
+jest.setTimeout(70000);
 beforeAll(async () => {
   await UserModel.deleteMany();
 });

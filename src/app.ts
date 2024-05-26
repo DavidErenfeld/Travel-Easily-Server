@@ -4,24 +4,29 @@ dotenv.config();
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
-const app = express();
-
 import tripsRoute from "./routes/trips_route";
 import authRoute from "./routes/auth_route";
 import fileRoute from "./routes/file_route";
 import userRoute from "./routes/user_route";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+
+const app = express();
+
 const dbUri =
   process.env.NODE_ENV === "test"
-    ? process.env.TEST_DB_URI
-    : process.env.DB_URL;
-mongoose.connect(dbUri);
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("Connected successfully to database");
-});
+    ? process.env.DB_URL
+    : process.env.TEST_DB_URL;
+if (!dbUri) {
+  throw new Error(
+    `The uri parameter to "openUri()" must be a string, got "undefined". ${dbUri}...................................................`
+  );
+}
+console.log(`Connecting to database with URL: ${dbUri}`);
+mongoose
+  .connect(dbUri)
+  .then(() => console.log("Connected successfully to database"))
+  .catch((err) => console.error("Database connection error:", err));
 
 const options = {
   definition: {
@@ -31,7 +36,6 @@ const options = {
       version: "1.0.0",
       description: "A simple CRUD API application",
     },
-
     servers: [
       { url: "https://enigmatic-island-56921-258869278475.herokuapp.com/" },
     ],
